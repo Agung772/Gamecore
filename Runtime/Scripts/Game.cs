@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Object = UnityEngine.Object;
+
+namespace Core
+{
+    public static class Game
+    {
+        public static GameManager Manager { get; internal set; }
+        public static string CurrentScene { get; set; }
+        private static Dictionary<Type, GlobalBehaviour> globals;
+        private static Dictionary<Type, LocalBehaviour> locals;
+
+        public static void Initialize()
+        {
+            CreateGlobal();
+
+            locals = new Dictionary<Type, LocalBehaviour>();
+            LoadLocal();
+            GameLoader.OnLoad += LoadLocal;
+            GameLoader.OnUnlooad += UnloadLocal;
+        }
+        
+        private static void CreateGlobal()
+        {
+            globals = InstanceUtility.Create<GlobalBehaviour>();
+            var _orderGlobal = OrderGlobal(globals.Values.ToArray());
+            foreach (var _global in _orderGlobal)
+            {
+                _global.Initialize();
+            }
+        }
+
+        private static GlobalBehaviour[] OrderGlobal(GlobalBehaviour[] global)
+        {
+            var _global = global.OrderBy(local => local.Order).ToArray();
+            return _global;
+        }
+
+        public static void LoadLocal()
+        {
+            var _tempLocals = Object.FindObjectsOfType<LocalBehaviour>(true);
+            foreach (var _local in _tempLocals) { locals.Add(_local.GetType(), _local); }
+            foreach (var _local in _tempLocals) { _local.OnAwake(); }
+            foreach (var _local in _tempLocals) { _local.OnStart(); }
+            
+            var _tempMultilocals = Object.FindObjectsOfType<MultilocalBehaviour>(true);
+            foreach (var _multilocal in _tempMultilocals) { _multilocal.OnAwake(); }
+            foreach (var _multilocal in _tempMultilocals) { _multilocal.OnStart(); }
+        }
+
+        public static void UnloadLocal()
+        {
+            locals.Clear();
+        }
+
+        public static bool TryGet<T>(out T behaviour) where T : class, IBehaviour
+        {
+            if (globals == null) { behaviour = null; return false; }
+            if (globals.TryGetValue(typeof(T), out var _global) && _global is T _castedGlobal)
+            {
+                behaviour = _castedGlobal;
+                return true;
+            }
+
+            if (locals == null) { behaviour = null; return false; }
+            if (locals.TryGetValue(typeof(T), out var _local) && _local is T _castedLocal)
+            {
+                behaviour = _castedLocal;
+                return true;
+            }
+
+            behaviour = null;
+            return false;
+        }
+        
+        public static T Get<T>() where T : class, IBehaviour
+        {
+            if (typeof(GlobalBehaviour).IsAssignableFrom(typeof(T)))
+            {
+                return globals[typeof(T)] as T;
+            }
+            if (typeof(LocalBehaviour).IsAssignableFrom(typeof(T)))
+            {
+                return locals[typeof(T)] as T;
+            }
+
+            return default;
+        }
+    }
+}
+

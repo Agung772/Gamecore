@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Core
 {
+    [DefaultExecutionOrder(-1000)]
     public class GameManager : MonoBehaviour
     {
         public RectTransform Canvas => canvas;
@@ -15,12 +15,13 @@ namespace Core
         {
             if (SceneManager.GetActiveScene().buildIndex != 0)
             {
+                
                 var _prefab = Resources.Load<GameManager>("GameManager");
                 Instantiate(_prefab);
             }
         }
         #endif
-        private void Start()
+        private void Awake()
         {
             Game.Manager = this;
             GameLoader.Initialize();
@@ -28,7 +29,7 @@ namespace Core
             DontDestroyOnLoad(gameObject);
             if (Game.CurrentScene == "Launcher")
             {
-                GameLoader.LoadScene("EatDrink");
+                GameLoader.LoadScene(SceneManager.GetSceneByBuildIndex(1).name);
             }
         }
 

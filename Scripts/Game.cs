@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Object = UnityEngine.Object;
@@ -12,24 +13,24 @@ namespace Core
         private static Dictionary<Type, GlobalBehaviour> globals;
         private static Dictionary<Type, LocalBehaviour> locals;
 
-        public static void Initialize()
+        public static IEnumerator Initialize()
         {
-            CreateGlobal();
+            yield return CreateGlobal();
 
             locals = new Dictionary<Type, LocalBehaviour>();
             LoadLocal();
-            GameLoader.OnLoad += LoadLocal;
-            GameLoader.OnUnlooad += UnloadLocal;
+            
+            Get<SceneLoader>().OnLoad += LoadLocal;
+            Get<SceneLoader>().OnUnlooad += UnloadLocal;
         }
         
-        private static void CreateGlobal()
+        private static IEnumerator CreateGlobal()
         {
             globals = InstanceUtility.Create<GlobalBehaviour>();
             var _orderGlobal = OrderGlobal(globals.Values.ToArray());
-            foreach (var _global in _orderGlobal)
-            {
-                _global.Initialize();
-            }
+            foreach (var _global in _orderGlobal) { yield return _global.InitializeCoroutine(); }
+            foreach (var _global in _orderGlobal) { _global.Initialize(); }
+            foreach (var _global in _orderGlobal) { _global.PostInitialize(); }
         }
 
         private static GlobalBehaviour[] OrderGlobal(GlobalBehaviour[] global)

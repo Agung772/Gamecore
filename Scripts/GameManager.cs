@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,22 +16,17 @@ namespace Core
         {
             if (SceneManager.GetActiveScene().buildIndex != 0)
             {
-                
-                var _prefab = Resources.Load<GameManager>("GameManager");
-                Instantiate(_prefab);
+                Game.CurrentScene = SceneManager.GetActiveScene().name;
+                SceneManager.LoadScene(0);
             }
         }
         #endif
-        private void Awake()
+        private IEnumerator Start()
         {
-            Game.Manager = this;
-            GameLoader.Initialize();
-            Game.Initialize();
             DontDestroyOnLoad(gameObject);
-            if (Game.CurrentScene == "Launcher")
-            {
-                GameLoader.LoadScene(SceneManager.GetSceneByBuildIndex(1).name);
-            }
+            Game.Manager = this;
+            yield return Game.Initialize();
+            Game.Get<SceneLoader>().LoadScene(Game.CurrentScene);
         }
 
         private void OnApplicationPause(bool pauseStatus)

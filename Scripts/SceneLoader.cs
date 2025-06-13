@@ -5,26 +5,22 @@ using UnityEngine.SceneManagement;
 
 namespace Core
 {
-    public static class GameLoader
+    public class SceneLoader : GlobalBehaviour
     {
-        public static event Action OnLoad;
-        public static event Action OnUnlooad;
-        public static void Initialize()
-        {
-            Game.CurrentScene = SceneManager.GetActiveScene().name;
-        }
-
-        public static void RestratScene()
+        public event Action OnLoad;
+        public event Action OnUnlooad;
+        
+        public void RestratScene()
         {
             LoadScene(Game.CurrentScene);
         }
         
-        public static void LoadScene(string sceneName, Action<float> onProgress = null, Action onComplete = null)
+        public void LoadScene(string sceneName, Action<float> onProgress = null, Action onComplete = null)
         {
             Game.Manager.StartCoroutine(LoadSceneAsync(sceneName, onProgress, onComplete));
         }
 
-        private static IEnumerator LoadSceneAsync(string sceneName, Action<float> onProgress = null, Action onComplete = null)
+        private IEnumerator LoadSceneAsync(string sceneName, Action<float> onProgress = null, Action onComplete = null)
         {
             OnUnlooad?.Invoke();
             var _async = SceneManager.LoadSceneAsync(sceneName);

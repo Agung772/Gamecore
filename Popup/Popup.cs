@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Core
 {
@@ -18,12 +19,21 @@ namespace Core
             }
         }
 
-        public PopupBehaviour Show<T>(PopupBehaviour.Packet packet = null) where T : PopupBehaviour
+        public PopupBehaviour Show<T>(PopupPacket popupPacket = null) where T : PopupBehaviour
         {
             var _prefab = resources[typeof(T)];
-            var _popup = GameObject.Instantiate(_prefab).GetComponent<PopupBehaviour>();
-            _popup.Initialize(packet);
-            if (!_popup.canMulti) active.Add(typeof(T), _popup);
+            var _popup = Object.Instantiate(_prefab, Game.Manager.Canvas).GetComponent<PopupBehaviour>();
+            _popup.Initialize(popupPacket);
+            if (_popup is not MultipopupBehaviour) active.Add(typeof(T), _popup);
+            return _popup;
+        }
+        
+        public PopupBehaviour ShowInWorld<T>(PopupPacket popupPacket = null) where T : PopupBehaviour
+        {
+            var _prefab = resources[typeof(T)];
+            var _popup = Object.Instantiate(_prefab).GetComponent<PopupBehaviour>();
+            _popup.Initialize(popupPacket);
+            if (_popup is not MultipopupBehaviour) active.Add(typeof(T), _popup);
             return _popup;
         }
         
@@ -32,7 +42,7 @@ namespace Core
             if (TryGet<T>(out var _popup))
             {
                 _popup.OnClose(); 
-                GameObject.Destroy(_popup.gameObject);
+                Object.Destroy(_popup.gameObject);
                 active.Remove(typeof(T));
                 return true;
             }
@@ -45,7 +55,7 @@ namespace Core
             if (active.ContainsKey(popup.GetType()))
             {
                 popup.OnClose(); 
-                GameObject.Destroy(popup.gameObject);
+                Object.Destroy(popup.gameObject);
                 active.Remove(popup.GetType());
                 return true;
             }

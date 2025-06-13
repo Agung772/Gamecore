@@ -4,48 +4,38 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopupBehaviour : MonoBehaviour
+namespace Core
 {
-    [FoldoutGroup("Base")] public bool canMulti;
-    [FoldoutGroup("Base")] [SerializeField] private bool autoClose;
-    [FoldoutGroup("Base")] [SerializeField, ShowIf("autoClose")] private int closeAfter;
-    [FoldoutGroup("Base")] [SerializeField] private Button closeBtn;
-    public Packet packet;
-    
-    public class Packet
+    public class PopupBehaviour : MonoBehaviour
     {
-        public Action onClose;
-    }
+        [FoldoutGroup("Base")] [SerializeField] private bool autoClose;
+        [FoldoutGroup("Base")] [SerializeField, ShowIf("autoClose")] private int closeAfter;
+        [FoldoutGroup("Base")] [SerializeField] private Button closeBtn;
+        public PopupPacket popupPacket;
     
-    public virtual void Initialize(Packet packetPopup = null)
-    {
-        packet = packetPopup;
-        if (closeBtn)
+        public virtual void Initialize(PopupPacket packet = null)
         {
-            closeBtn.onClick.AddListener(() => Game.Get<Popup>().Remove(this));
-        }
-
-        if (autoClose)
-        {
-            gameObject.LeanDelayedCall(closeAfter, () =>
+            popupPacket = packet;
+            if (closeBtn)
             {
-                if (canMulti)
-                {
-                    Destroy(gameObject);
-                }
-                else
+                closeBtn.onClick.AddListener(() => Game.Get<Popup>().Remove(this));
+            }
+
+            if (autoClose)
+            {
+                gameObject.LeanDelayedCall(closeAfter, () =>
                 {
                     Game.Get<Popup>().Remove(this);
-                }
-            });
+                });
+            }
         }
-    }
     
-    public virtual void OnClose()
-    {
-        if (packet != null)
+        public virtual void OnClose()
         {
-            packet.onClose?.Invoke();
+            if (popupPacket != null)
+            {
+                popupPacket.onClose?.Invoke();
+            }
         }
     }
 }

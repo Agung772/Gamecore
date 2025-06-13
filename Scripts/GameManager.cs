@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,17 +17,29 @@ namespace Core
         {
             if (SceneManager.GetActiveScene().buildIndex != 0)
             {
-                Game.CurrentScene = SceneManager.GetActiveScene().name;
-                SceneManager.LoadScene(0);
+                Instantiate(Resources.Load<GameManager>("GameManager"));
             }
         }
         #endif
-        private IEnumerator Start()
+
+        private void Awake()
+        {
+            StartCoroutine(Initialize());
+        }
+
+        private IEnumerator Initialize()
         {
             DontDestroyOnLoad(gameObject);
             Game.Manager = this;
-            yield return Game.Initialize();
-            Game.Get<SceneLoader>().LoadScene(Game.CurrentScene);
+            Game.Initialize();
+            yield return Game.InitializeCoroutine();
+            
+            if (SceneManager.GetActiveScene().buildIndex == 0)
+            {
+                var _scenePath = SceneUtility.GetScenePathByBuildIndex(1);
+                var _sceneName = Path.GetFileNameWithoutExtension(_scenePath);
+                Game.Get<SceneLoader>().LoadScene(_sceneName);
+            }
         }
 
         private void OnApplicationPause(bool pauseStatus)

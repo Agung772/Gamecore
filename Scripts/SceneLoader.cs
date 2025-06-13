@@ -9,7 +9,14 @@ namespace Core
     {
         public event Action OnLoad;
         public event Action OnUnlooad;
-        
+
+        public override void Initialize()
+        {
+            Game.CurrentScene = SceneManager.GetActiveScene().name;
+            SceneManager.sceneLoaded += (_, _) => OnLoad?.Invoke();
+            SceneManager.sceneUnloaded += _ => OnUnlooad?.Invoke();
+        }
+
         public void RestratScene()
         {
             LoadScene(Game.CurrentScene);
@@ -22,7 +29,6 @@ namespace Core
 
         private IEnumerator LoadSceneAsync(string sceneName, Action<float> onProgress = null, Action onComplete = null)
         {
-            OnUnlooad?.Invoke();
             var _async = SceneManager.LoadSceneAsync(sceneName);
 
             while (_async.isDone)
@@ -35,9 +41,8 @@ namespace Core
             var _isCompleted = false;
             _async.completed += _ => _isCompleted = true;
             yield return new WaitUntil(() => _isCompleted);
-   
+            
             Game.CurrentScene = SceneManager.GetActiveScene().name;
-            OnLoad?.Invoke();
             onComplete?.Invoke();
         }
     }

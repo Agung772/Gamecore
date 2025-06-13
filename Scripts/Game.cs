@@ -13,22 +13,25 @@ namespace Core
         private static Dictionary<Type, GlobalBehaviour> globals;
         private static Dictionary<Type, LocalBehaviour> locals;
 
-        public static IEnumerator Initialize()
+        public static void Initialize()
         {
-            yield return CreateGlobal();
-
+            CreateGlobal();
             locals = new Dictionary<Type, LocalBehaviour>();
             LoadLocal();
             
             Get<SceneLoader>().OnLoad += LoadLocal;
             Get<SceneLoader>().OnUnlooad += UnloadLocal;
         }
+
+        public static IEnumerator InitializeCoroutine()
+        {
+            foreach (var _global in globals.Values) { yield return _global.InitializeCoroutine(); }
+        }
         
-        private static IEnumerator CreateGlobal()
+        private static void CreateGlobal()
         {
             globals = InstanceUtility.Create<GlobalBehaviour>();
             var _orderGlobal = OrderGlobal(globals.Values.ToArray());
-            foreach (var _global in _orderGlobal) { yield return _global.InitializeCoroutine(); }
             foreach (var _global in _orderGlobal) { _global.Initialize(); }
             foreach (var _global in _orderGlobal) { _global.PostInitialize(); }
         }

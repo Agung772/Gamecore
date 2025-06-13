@@ -1,6 +1,5 @@
 using System.Collections;
 using System;
-using Core.Ads;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

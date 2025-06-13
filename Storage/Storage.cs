@@ -58,6 +58,11 @@ namespace Core
         }
         public void Save()
         {
+            foreach (var _key in storages.Keys.ToList())
+            {
+                storages[_key].OnSave();
+            }
+            
             var _json = JsonConvert.SerializeObject(storages, jsonSettings);
             var _encrypt = Encryption.Encrypt(_json);
             File.WriteAllBytes(PathFile, _encrypt);

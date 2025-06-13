@@ -1,3 +1,5 @@
+#if GOOGLE_MOBILE_ADS
+
 using System;
 using GoogleMobileAds.Api;
 using UnityEngine;
@@ -58,4 +60,4 @@ namespace Core.Ads
     }
 }
 
-
+#endif

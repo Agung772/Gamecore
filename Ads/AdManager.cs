@@ -1,3 +1,5 @@
+#if GOOGLE_MOBILE_ADS
+
 using System;
 using System.Collections.Generic;
 using GoogleMobileAds.Api;
@@ -51,3 +53,4 @@ namespace Core.Ads
     }
 }
 
+#endif

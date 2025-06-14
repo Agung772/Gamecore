@@ -7,7 +7,7 @@ public static class GameNetwork
 {
     private const string TEST_URL = "https://www.google.com/generate_204";
     private const float TIMEOUT_SECONDS = 5f;
-    private const float SLOW_THRESHOLD_SECONDS = 1.5f;
+    private const float SLOW_THRESHOLD_SECONDS = 3f;
     
     public static async Task<bool> IsInternetConnection()
     {

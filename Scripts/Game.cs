@@ -17,7 +17,6 @@ namespace Core
         {
             CreateGlobal();
             locals = new Dictionary<Type, LocalBehaviour>();
-            LoadLocal();
             
             Get<SceneLoader>().OnLoad += LoadLocal;
             Get<SceneLoader>().OnUnlooad += UnloadLocal;

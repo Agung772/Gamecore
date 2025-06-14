@@ -22,16 +22,9 @@ namespace Core
         public PopupBehaviour Show<T>(PopupPacket popupPacket = null) where T : PopupBehaviour
         {
             var _prefab = resources[typeof(T)];
-            var _popup = Object.Instantiate(_prefab, Game.Manager.Canvas).GetComponent<PopupBehaviour>();
-            _popup.Initialize(popupPacket);
-            if (_popup is not MultipopupBehaviour) active.Add(typeof(T), _popup);
-            return _popup;
-        }
-        
-        public PopupBehaviour ShowInWorld<T>(PopupPacket popupPacket = null) where T : PopupBehaviour
-        {
-            var _prefab = resources[typeof(T)];
-            var _popup = Object.Instantiate(_prefab).GetComponent<PopupBehaviour>();
+            PopupBehaviour _popup;
+            if (popupPacket is PopupWorldPacket) _popup = Object.Instantiate(_prefab).GetComponent<PopupBehaviour>();
+            else _popup = Object.Instantiate(_prefab, Game.Manager.Canvas).GetComponent<PopupBehaviour>();
             _popup.Initialize(popupPacket);
             if (_popup is not MultipopupBehaviour) active.Add(typeof(T), _popup);
             return _popup;

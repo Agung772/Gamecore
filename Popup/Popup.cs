@@ -34,9 +34,9 @@ namespace Core
         {
             if (TryGet<T>(out var _popup))
             {
-                _popup.OnClose(); 
                 Object.Destroy(_popup.gameObject);
                 active.Remove(typeof(T));
+                _popup.OnClose(); 
                 return true;
             }
             

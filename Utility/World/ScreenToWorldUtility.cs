@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class WorldConvert
+public static class ScreenToWorldUtility
 {
     private static Camera MainCamera => Camera.main;
     public static float GetFullScaleX()

@@ -3,18 +3,8 @@ using System.Linq;
 
 namespace Core
 {
-    public static class Convert
+    public static class ArrayExtensions
     {
-        public static T ToEnum<T>(this string text) where T : Enum
-        {
-            return (T)Enum.Parse(typeof(T), text, true);
-        }
-        
-        public static int GetLength<TEnum>() where TEnum : Enum
-        {
-            return Enum.GetValues(typeof(TEnum)).Length;
-        }
-        
         public static T[] SetLength<T>(T[] array, int length, T defaultValue = default)
         {
             var _newArray = new T[length];
@@ -56,15 +46,6 @@ namespace Core
             }
 
             return _copy;
-        }
-        
-        public static string ToSpace(this Enum text)
-        {
-            var _result = text.ToString();
-            if (string.IsNullOrEmpty(_result)) return _result;
-
-            return string.Concat(_result.Select((ch, i) => 
-                i > 0 && char.IsUpper(ch) ? " " + ch : ch.ToString()));
         }
     }
 }

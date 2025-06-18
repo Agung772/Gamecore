@@ -1,0 +1,14 @@
+{
+  "name": "com.agung.gamecore",
+  "version": "1.0.0",
+  "displayName": "Gamecore",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "unity": "2022.3",
+  "author": {
+    "name": "Agung Gunawan",
+    "url": "https://github.com/Agung772"
+  },
+  "description": "Masih tahap beta hehe"
+}

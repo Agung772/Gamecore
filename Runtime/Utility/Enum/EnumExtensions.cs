@@ -14,9 +14,14 @@ public static class EnumExtensions
         return Enum.GetValues(typeof(TEnum)).Length;
     }
     
-    public static string ToSpace(this Enum text)
+    public static string ToInt(this Enum enumValue)
     {
-        var _result = text.ToString();
+        return Convert.ToInt32(enumValue).ToString();
+    }
+    
+    public static string ToSpace(this Enum enumValue)
+    {
+        var _result = enumValue.ToString();
         if (string.IsNullOrEmpty(_result)) return _result;
 
         return string.Concat(_result.Select((ch, i) => 

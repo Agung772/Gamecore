@@ -1,0 +1,19 @@
+{
+    "name": "GamecoreAssembly",
+    "rootNamespace": "Core",
+    "references": [
+        "GUID:f4353d2746897fa4c9e19912f183490e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Sirenix.OdinInspector.Attributes.dll",
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

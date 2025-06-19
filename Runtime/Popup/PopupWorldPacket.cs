@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core
+namespace Gamecore
 {
     public class PopupWorldPacket : PopupPacket
     {

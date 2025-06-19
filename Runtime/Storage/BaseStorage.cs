@@ -1,4 +1,4 @@
-namespace Core
+namespace Gamecore
 {
     public class BaseStorage
     {

@@ -1,4 +1,4 @@
-namespace Core.Ads
+namespace Gamecore.Ads
 {
     public class AdBase
     {

@@ -1,14 +1,17 @@
 using System;
 using Sirenix.OdinInspector;
 
-[Serializable, InlineProperty]
-public struct FloatRange
+namespace Gamecore
 {
-    [HorizontalGroup("Range")]
-    public float min;
-    [HorizontalGroup("Range")]
-    public float max;
-    public void Set(float minValue, float maxValue) { min = minValue; max = maxValue; }
-    public void Set(float value) { min = value; max = value; }
-    public void Add(float value) { min += value; max += value; }
+    [Serializable, InlineProperty]
+    public struct FloatRange
+    {
+        [HorizontalGroup("Range")]
+        public float min;
+        [HorizontalGroup("Range")]
+        public float max;
+        public void Set(float minValue, float maxValue) { min = minValue; max = maxValue; }
+        public void Set(float value) { min = value; max = value; }
+        public void Add(float value) { min += value; max += value; }
+    }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Core
+namespace Gamecore
 {
     public class PopupPacket
     {

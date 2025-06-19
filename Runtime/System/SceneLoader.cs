@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Core
+namespace Gamecore
 {
     public class SceneLoader : GlobalBehaviour
     {

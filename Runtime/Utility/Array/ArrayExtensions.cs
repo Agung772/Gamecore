@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Core
+namespace Gamecore
 {
     public static class ArrayExtensions
     {

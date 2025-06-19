@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-public static class InstanceUtility
+namespace Gamecore
 {
-    public static Dictionary<Type, T> Create<T>() 
+    public static class InstanceUtility
     {
-        var _result = new Dictionary<Type, T>();
-
-        var _baseType = typeof(T);
-        var _assembly = Assembly.GetAssembly(_baseType);
-
-        var _derivedTypes = _assembly.GetTypes()
-            .Where(type => type.IsSubclassOf(_baseType) && !type.IsAbstract)
-            .ToList();
-
-        foreach (var _type in _derivedTypes)
+        public static Dictionary<Type, T> Create<T>() 
         {
-            if (Activator.CreateInstance(_type) is T _instance)
-            {
-                _result.Add(_type, _instance);
-            }
-        }
+            var _result = new Dictionary<Type, T>();
 
-        return _result;
+            var _baseType = typeof(T);
+            var _assembly = Assembly.GetAssembly(_baseType);
+
+            var _derivedTypes = _assembly.GetTypes()
+                .Where(type => type.IsSubclassOf(_baseType) && !type.IsAbstract)
+                .ToList();
+
+            foreach (var _type in _derivedTypes)
+            {
+                if (Activator.CreateInstance(_type) is T _instance)
+                {
+                    _result.Add(_type, _instance);
+                }
+            }
+
+            return _result;
+        }
     }
 }

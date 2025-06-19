@@ -1,7 +1,10 @@
-public static class FloatRangeExtensions
+namespace Gamecore
 {
-    public static float Random(this FloatRange range)
+    public static class FloatRangeExtensions
     {
-        return UnityEngine.Random.Range(range.min, range.max);
+        public static float Random(this FloatRange range)
+        {
+            return UnityEngine.Random.Range(range.min, range.max);
+        }
     }
 }

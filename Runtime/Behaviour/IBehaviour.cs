@@ -1,1 +1,4 @@
-public interface IBehaviour {}
+namespace Gamecore
+{
+    public interface IBehaviour {}
+}

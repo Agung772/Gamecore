@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Core
+namespace Gamecore
 {
     public class Popup : GlobalBehaviour
     {

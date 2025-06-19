@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Object = UnityEngine.Object;
 
-namespace Core
+namespace Gamecore
 {
     public static class Game
     {

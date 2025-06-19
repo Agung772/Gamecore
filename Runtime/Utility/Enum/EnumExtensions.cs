@@ -1,30 +1,33 @@
 using System;
 using System.Linq;
-using UnityEngine;
 
-public static class EnumExtensions
+namespace Gamecore
 {
-    public static T ToEnum<T>(this string text) where T : Enum
+    public static class EnumExtensions
     {
-        return (T)Enum.Parse(typeof(T), text, true);
-    }
+        public static T ToEnum<T>(this string text) where T : Enum
+        {
+            return (T)Enum.Parse(typeof(T), text, true);
+        }
         
-    public static int GetLength<TEnum>() where TEnum : Enum
-    {
-        return Enum.GetValues(typeof(TEnum)).Length;
-    }
+        public static int GetLength<TEnum>() where TEnum : Enum
+        {
+            return Enum.GetValues(typeof(TEnum)).Length;
+        }
     
-    public static int ToInt(this Enum enumValue)
-    {
-        return Convert.ToInt32(enumValue);
-    }
+        public static int ToInt(this Enum enumValue)
+        {
+            return Convert.ToInt32(enumValue);
+        }
     
-    public static string ToSpace(this Enum enumValue)
-    {
-        var _result = enumValue.ToString();
-        if (string.IsNullOrEmpty(_result)) return _result;
+        public static string ToSpace(this Enum enumValue)
+        {
+            var _result = enumValue.ToString();
+            if (string.IsNullOrEmpty(_result)) return _result;
 
-        return string.Concat(_result.Select((ch, i) => 
-            i > 0 && char.IsUpper(ch) ? " " + ch : ch.ToString()));
+            return string.Concat(_result.Select((ch, i) => 
+                i > 0 && char.IsUpper(ch) ? " " + ch : ch.ToString()));
+        }
     }
 }
+

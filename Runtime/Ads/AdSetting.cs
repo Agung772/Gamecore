@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.Ads
+namespace Gamecore.Ads
 {
     [CreateAssetMenu(menuName = "Core/Ad Setting")]
     public class AdSetting : ScriptableObject

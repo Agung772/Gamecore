@@ -1,7 +1,10 @@
-public static class IntRangeExtensions
+namespace Gamecore
 {
-    public static int Random(this IntRange range)
+    public static class IntRangeExtensions
     {
-        return UnityEngine.Random.Range(range.min, range.max);
+        public static int Random(this IntRange range)
+        {
+            return UnityEngine.Random.Range(range.min, range.max);
+        }
     }
 }

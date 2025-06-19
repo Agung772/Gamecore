@@ -1,6 +1,6 @@
 {
     "name": "GamecoreAssembly",
-    "rootNamespace": "Core",
+    "rootNamespace": "Gamecore",
     "references": [
         "LeanTween"
     ],

@@ -12,12 +12,12 @@ namespace Gamecore
             var _result = new Dictionary<Type, T>();
 
             var _baseType = typeof(T);
-            var _allowedAssemblies = new[] 
-            {
-                Assembly.GetAssembly(_baseType),
-            };
-
-
+            var _allowedAssemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a =>
+                    a.FullName.Contains("Assembly-CSharp") ||
+                    a.FullName.Contains("Gamecore")
+                ).ToArray();
+            
             var _derivedTypes = _allowedAssemblies
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => type.IsSubclassOf(_baseType) && !type.IsAbstract)

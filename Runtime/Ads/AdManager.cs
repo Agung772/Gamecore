@@ -16,6 +16,7 @@ namespace Gamecore.Ads
         public override async void Initialize()
         {
             Setting = Resources.Load<AdSetting>("AdSetting");
+            if (Setting == null) return;
             
             ads = new Dictionary<Type, AdBase>();
 

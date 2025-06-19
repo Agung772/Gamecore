@@ -12,10 +12,11 @@ namespace Gamecore
             var _result = new Dictionary<Type, T>();
 
             var _baseType = typeof(T);
-            var _allowedAssemblies = new[] {
-                Assembly.GetAssembly(typeof(T)),
-                Assembly.GetExecutingAssembly()
+            var _allowedAssemblies = new[] 
+            {
+                Assembly.GetAssembly(_baseType),
             };
+
 
             var _derivedTypes = _allowedAssemblies
                 .SelectMany(assembly => assembly.GetTypes())

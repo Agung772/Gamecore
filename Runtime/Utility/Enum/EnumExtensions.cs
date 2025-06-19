@@ -14,9 +14,9 @@ public static class EnumExtensions
         return Enum.GetValues(typeof(TEnum)).Length;
     }
     
-    public static string ToInt(this Enum enumValue)
+    public static int ToInt(this Enum enumValue)
     {
-        return Convert.ToInt32(enumValue).ToString();
+        return Convert.ToInt32(enumValue);
     }
     
     public static string ToSpace(this Enum enumValue)

@@ -44,7 +44,7 @@ namespace Gamecore
                     var _raw = JsonConvert.DeserializeObject<Dictionary<string, JToken>>(_decrypt, jsonSettings);
                     var _serializer = JsonSerializer.Create(jsonSettings);
 
-                    foreach (var _key in storages.Keys)
+                    foreach (var _key in storages.Keys.ToArray())
                     {
                         try
                         {

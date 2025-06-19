@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
-namespace Core.Ads
+namespace Gamecore.Ads
 {
     public class AdManager : GlobalBehaviour
     {

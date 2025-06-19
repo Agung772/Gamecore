@@ -4,7 +4,7 @@ using System;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
-namespace Core.Ads
+namespace Gamecore.Ads
 {
     public class AdRewarded : AdBase
     {

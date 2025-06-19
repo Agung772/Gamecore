@@ -18,7 +18,6 @@
         "Sirenix.Serialization.Config.dll",
         "Newtonsoft.Json.dll",
         "Unity.Plastic.Newtonsoft.Json.dll",
-        "unityplastic.dll",
         "GoogleMobileAds.Common.dll",
         "GoogleMobileAds.dll",
         "GoogleMobileAds.Core.dll",

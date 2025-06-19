@@ -68,7 +68,7 @@ namespace Gamecore
                 }
                 catch (Exception _ex)
                 {
-                    Debug.LogError($"Failed to load storage data: {_ex.Message}");
+                    Debug.LogWarning($"Failed to load storage data: {_ex.Message}");
                     foreach (var _storage in storages.Values)
                     {
                         _storage.OnLoad();

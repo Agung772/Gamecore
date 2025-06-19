@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace Gamecore
@@ -36,26 +36,54 @@ namespace Gamecore
         {
             if (File.Exists(PathFile))
             {
-                var _json = File.ReadAllBytes(PathFile);
-                var _decrypt = Encryption.Decrypt(_json);
-                var _temp = JsonConvert.DeserializeObject<Dictionary<Type, BaseStorage>>(_decrypt, jsonSettings);
-                foreach (var _key in storages.Keys.ToList())
+                try
                 {
-                    if (_temp.TryGetValue(_key, out var _storage))
+                    var _json = File.ReadAllBytes(PathFile);
+                    var _decrypt = Encryption.Decrypt(_json);
+
+                    var _raw = JsonConvert.DeserializeObject<Dictionary<string, JToken>>(_decrypt, jsonSettings);
+                    var _serializer = JsonSerializer.Create(jsonSettings);
+
+                    foreach (var _key in storages.Keys)
                     {
-                        storages[_key] = _storage;
+                        try
+                        {
+                            var _typeName = _key.AssemblyQualifiedName;
+                            if (_typeName != null && _raw.TryGetValue(_typeName, out var _token))
+                            {
+                                var _storage = _token.ToObject(typeof(BaseStorage), _serializer) as BaseStorage;
+                                if (_storage != null)
+                                {
+                                    storages[_key] = _storage;
+                                }
+                            }
+                        }
+                        catch (Exception _exInner)
+                        {
+                            Debug.LogWarning($"Skip error for storage type {_key.Name}: {_exInner.Message}");
+                        }
+
                         storages[_key].OnLoad();
+                    }
+                }
+                catch (Exception _ex)
+                {
+                    Debug.LogError($"Failed to load storage data: {_ex.Message}");
+                    foreach (var _storage in storages.Values)
+                    {
+                        _storage.OnLoad();
                     }
                 }
             }
             else
             {
-                foreach (var _key in storages.Keys.ToList())
+                foreach (var _storage in storages.Values)
                 {
-                    storages[_key].OnLoad();
+                    _storage.OnLoad();
                 }
             }
         }
+
         public void Save()
         {
             foreach (var _key in storages.Keys.ToList())

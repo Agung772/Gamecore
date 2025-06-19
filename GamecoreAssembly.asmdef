@@ -2,7 +2,7 @@
     "name": "GamecoreAssembly",
     "rootNamespace": "Core",
     "references": [
-        "GUID:f4353d2746897fa4c9e19912f183490e"
+        "LeanTween"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

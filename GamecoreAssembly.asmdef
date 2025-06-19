@@ -10,7 +10,13 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "Sirenix.OdinInspector.Attributes.dll",
-        "Newtonsoft.Json.dll"
+        "Newtonsoft.Json.dll",
+        "GoogleMobileAds.Common.dll",
+        "GoogleMobileAds.dll",
+        "GoogleMobileAds.Core.dll",
+        "GoogleMobileAds.Ump.dll",
+        "GoogleMobileAds.Ump.Unity.dll",
+        "GoogleMobileAds.Unity.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

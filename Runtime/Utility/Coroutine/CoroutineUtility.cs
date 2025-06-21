@@ -31,6 +31,11 @@ namespace Gamecore
             coroutines[key] = null;
             coroutines.Remove(key);
         }
+
+        public static bool IsLoop(this GameObject key)
+        {
+            return coroutines.ContainsKey(key);
+        }
         private static IEnumerator LoopCoroutine(GameObject key, float time, Action callBack)
         {
             while (true)

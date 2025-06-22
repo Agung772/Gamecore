@@ -7,6 +7,7 @@ namespace Gamecore
     {
         public static void PlayLoop(this AudioClip clip)
         {
+            if (clip == null) return;
             var _source = Game.Get<AudioManager>().BGMSource;
             if (_source.clip == clip) return;
             
@@ -35,6 +36,7 @@ namespace Gamecore
         
         public static void PlayOneShot(this AudioClip clip)
         {
+            if (clip == null) return;
             var _source = Game.Get<AudioManager>().SFXSource;
             _source.PlayOneShot(clip);
         }

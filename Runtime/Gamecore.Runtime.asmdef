@@ -1,5 +1,5 @@
 {
-    "name": "GamecoreAssembly",
+    "name": "Gamecore.Runtime",
     "rootNamespace": "Gamecore",
     "references": [
         "LeanTween"

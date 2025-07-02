@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Gamecore.Animation
 {
-    public class RoteteThis : MonoBehaviour
+    public class RotateThis : MonoBehaviour
     {
         [SerializeField] private float speed;
         [SerializeField] private Vector3 axis;

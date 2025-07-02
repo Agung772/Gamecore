@@ -41,7 +41,7 @@ namespace Gamecore
             return _global;
         }
 
-        public static void LoadLocal()
+        private static void LoadLocal()
         {
             var _tempLocals = Object.FindObjectsOfType<LocalBehaviour>(true);
             foreach (var _local in _tempLocals) { locals.Add(_local.GetType(), _local); }
@@ -53,7 +53,7 @@ namespace Gamecore
             foreach (var _multilocal in _tempMultilocals) { _multilocal.OnStart(); }
         }
 
-        public static void UnloadLocal()
+        private static void UnloadLocal()
         {
             locals.Clear();
         }
@@ -80,6 +80,11 @@ namespace Gamecore
         
         public static T Get<T>() where T : class, IBehaviour
         {
+            if (globals == null) return null;
+            if (locals == null) return null;
+            if (!globals.ContainsKey(typeof(T))) return null;
+            if (!locals.ContainsKey(typeof(T))) return null;
+            
             if (typeof(GlobalBehaviour).IsAssignableFrom(typeof(T)))
             {
                 return globals[typeof(T)] as T;
@@ -89,7 +94,7 @@ namespace Gamecore
                 return locals[typeof(T)] as T;
             }
 
-            return default;
+            return null;
         }
     }
 }

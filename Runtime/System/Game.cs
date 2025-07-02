@@ -80,18 +80,15 @@ namespace Gamecore
         
         public static T Get<T>() where T : class, IBehaviour
         {
-            if (globals == null) return null;
-            if (locals == null) return null;
-            if (!globals.ContainsKey(typeof(T))) return null;
-            if (!locals.ContainsKey(typeof(T))) return null;
-            
+            if (globals == null || locals == null) return null;
+
             if (typeof(GlobalBehaviour).IsAssignableFrom(typeof(T)))
             {
-                return globals[typeof(T)] as T;
+                if (globals.TryGetValue(typeof(T), out var _value)) return _value as T;
             }
-            if (typeof(LocalBehaviour).IsAssignableFrom(typeof(T)))
+            else if (typeof(LocalBehaviour).IsAssignableFrom(typeof(T)))
             {
-                return locals[typeof(T)] as T;
+                if (locals.TryGetValue(typeof(T), out var _value)) return _value as T;
             }
 
             return null;

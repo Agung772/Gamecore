@@ -1,3 +1,4 @@
+using Gamecore.Tool;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace Gamecore.Animation
 {
     public class MoveLocalThis : MonoBehaviour
     {
-        [SerializeField] private Vector3 to;
+        [SerializeField, PickFromScene] private Vector3 to;
         [SerializeField] private float time;
         [SerializeField] private LeanTweenType type;
         

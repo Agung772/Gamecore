@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace Gamecore.Animation
 {
-    public class RotateThis : MonoBehaviour
+    public class ScaleThis : MonoBehaviour
     {
-        [SerializeField] private Vector3 axis;
-        [SerializeField] private float add = 360;
+        [SerializeField] private Vector3 to;
         [SerializeField] private float time;
         [SerializeField] private LeanTweenType type;
         
@@ -16,11 +15,11 @@ namespace Gamecore.Animation
         {
             if (loop)
             {
-                gameObject.LeanRotateAroundLocal(axis, add, time).setEase(type).setLoopType(loopType);
+                gameObject.LeanScale(to, time).setEase(type).setLoopType(loopType);
             }
             else
             {
-                gameObject.LeanRotateAroundLocal(axis, add, time).setEase(type);
+                gameObject.LeanScale(to, time).setEase(type);
             }
         }
 
@@ -30,4 +29,3 @@ namespace Gamecore.Animation
         }
     }
 }
-

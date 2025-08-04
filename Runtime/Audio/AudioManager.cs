@@ -20,5 +20,25 @@ namespace Gamecore
             _source.transform.SetParent(Game.Manager.transform);
             return _source;
         }
+        
+        public void MuteBGM(bool active)
+        {
+            BGMSource.mute = active;
+        }
+        
+        public void MuteSFX(bool active)
+        {
+            SFXSource.mute = active;
+        }
+
+        public void VolumeBGM(float volume)
+        {
+            BGMSource.volume = volume;
+        }
+        
+        public void VolumeSFX(float volume)
+        {
+            SFXSource.volume = volume;
+        }
     }
 }

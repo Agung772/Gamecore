@@ -1,6 +1,6 @@
 {
   "name": "com.agung.gamecore",
-  "version": "1.3.16",
+  "version": "1.3.17",
   "displayName": "Gamecore",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.2.1"

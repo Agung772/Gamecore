@@ -5,6 +5,8 @@ namespace Gamecore.Animation
 {
     public class RotateThis : MonoBehaviour
     {
+        [SerializeField] private bool useUnScaledTime;
+        
         [SerializeField] private bool isFrom;
         [SerializeField, ShowIf(nameof(isFrom))] private Vector3 from;
         [SerializeField] private Vector3 to;
@@ -24,11 +26,11 @@ namespace Gamecore.Animation
             
             if (loop)
             {
-                gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setLoopType(loopType);
+                gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setLoopType(loopType).setIgnoreTimeScale(useUnScaledTime);
             }
             else
             {
-                gameObject.LeanRotateAroundLocal(to, add, time).setEase(type);
+                gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
             }
         }
 

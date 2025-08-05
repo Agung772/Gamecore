@@ -6,6 +6,8 @@ namespace Gamecore.Animation
 {
     public class MoveLocalThis : MonoBehaviour
     {
+        [SerializeField] private bool useUnScaledTime;
+        
         [SerializeField] private bool isFrom;
         [SerializeField, ShowIf(nameof(isFrom)), PickFromScene] private Vector3 from;
         [SerializeField, PickFromScene] private Vector3 to;
@@ -25,11 +27,11 @@ namespace Gamecore.Animation
             
             if (loop)
             {
-                gameObject.LeanMoveLocal(to, time).setEase(type).setLoopType(loopType);
+                gameObject.LeanMoveLocal(to, time).setEase(type).setLoopType(loopType).setIgnoreTimeScale(useUnScaledTime);
             }
             else
             {
-                gameObject.LeanMoveLocal(to, time).setEase(type);
+                gameObject.LeanMoveLocal(to, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
             }
         }
 

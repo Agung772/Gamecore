@@ -5,6 +5,8 @@ namespace Gamecore.Animation
 {
     public class ScaleThis : MonoBehaviour
     {
+        [SerializeField] private bool useUnScaledTime;
+        
         [SerializeField] private bool isFrom;
         [SerializeField, ShowIf(nameof(isFrom))] private Vector3 from;
         [SerializeField] private Vector3 to;
@@ -23,11 +25,11 @@ namespace Gamecore.Animation
             
             if (loop)
             {
-                gameObject.LeanScale(to, time).setEase(type).setLoopType(loopType);
+                gameObject.LeanScale(to, time).setEase(type).setLoopType(loopType).setIgnoreTimeScale(useUnScaledTime);
             }
             else
             {
-                gameObject.LeanScale(to, time).setEase(type);
+                gameObject.LeanScale(to, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
             }
         }
 

@@ -28,7 +28,7 @@ namespace Gamecore
 
         private void OnDisable()
         {
-            gameObject.LeanCancel();
+            gameObject.LeanCancel(tweenID);
         }
 
         public void Play()
@@ -42,12 +42,11 @@ namespace Gamecore
                     gameObject.LeanMoveLocal(Vector3.zero, returnDuration);
                 }).setIgnoreTimeScale(useUnScaledTime);
 
-            tweenID = _tween.id;
-
             if (loop)
             {
                 _tween.setLoopType(loopType);
             }
+            tweenID = _tween.id;
         }
     }
 }

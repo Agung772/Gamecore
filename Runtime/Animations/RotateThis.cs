@@ -17,6 +17,8 @@ namespace Gamecore.Animation
         
         [SerializeField] private bool loop;
         [SerializeField, ShowIf(nameof(loop))] private LeanTweenType loopType;
+        
+        private int tweenID;
         private void OnEnable()
         {
             if (isFrom)
@@ -30,11 +32,12 @@ namespace Gamecore.Animation
             {
                 _tween.setLoopType(loopType);
             }
+            tweenID = _tween.id;
         }
 
         private void OnDisable()
         {
-            gameObject.LeanCancel();
+            gameObject.LeanCancel(tweenID);
         }
     }
 }

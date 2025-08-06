@@ -14,7 +14,6 @@ namespace Gamecore
         [SerializeField] private float moveDuration = 0.5f; // Durasi gerakan shake pertama
         [SerializeField] private float shakeOffsetStrength = 0.1f; // Seberapa jauh efek shake dari posisi nol
         [SerializeField] private float returnDuration = 0.2f; // Durasi kembali ke posisi nol
-        [SerializeField] private LeanTweenType type = LeanTweenType.easeShake;
         
         [SerializeField] private bool loop;
         [SerializeField, ShowIf(nameof(loop))] private LeanTweenType loopType;
@@ -36,10 +35,10 @@ namespace Gamecore
 
         public void Play()
         {
-            from = transform.position;
+            from = transform.localPosition;
             gameObject.LeanCancel(tweenID);
             var _tween = gameObject.LeanMoveLocal(from, moveDuration)
-                .setEase(type)
+                .setEase(LeanTweenType.easeShake)
                 .setFrom(from + Random.insideUnitSphere * shakeOffsetStrength)
                 .setOnComplete(() =>
                 {

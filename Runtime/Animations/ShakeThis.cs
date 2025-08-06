@@ -8,6 +8,8 @@ namespace Gamecore
     {
         [SerializeField] private bool useUnScaledTime;
         
+        private Vector3 from;
+
         [SerializeField] private bool autoPlay;
         [SerializeField] private float moveDuration = 0.5f; // Durasi gerakan shake pertama
         [SerializeField] private float shakeOffsetStrength = 0.1f; // Seberapa jauh efek shake dari posisi nol
@@ -18,8 +20,10 @@ namespace Gamecore
         [SerializeField, ShowIf(nameof(loop))] private LeanTweenType loopType;
 
         private int tweenID;
+        
         private void OnEnable()
         {
+            from = transform.position;
             if (autoPlay)
             {
                 Play();
@@ -34,12 +38,12 @@ namespace Gamecore
         public void Play()
         {
             gameObject.LeanCancel(tweenID);
-            var _tween = gameObject.LeanMoveLocal(Vector3.zero, moveDuration)
+            var _tween = gameObject.LeanMoveLocal(from, moveDuration)
                 .setEase(type)
-                .setFrom(Vector3.zero + Random.insideUnitSphere * shakeOffsetStrength)
+                .setFrom(from + Random.insideUnitSphere * shakeOffsetStrength)
                 .setOnComplete(() =>
                 {
-                    gameObject.LeanMoveLocal(Vector3.zero, returnDuration);
+                    gameObject.LeanMoveLocal(from, returnDuration);
                 }).setIgnoreTimeScale(useUnScaledTime);
 
             if (loop)

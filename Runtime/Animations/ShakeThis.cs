@@ -23,7 +23,6 @@ namespace Gamecore
         
         private void OnEnable()
         {
-            from = transform.position;
             if (autoPlay)
             {
                 Play();
@@ -37,6 +36,7 @@ namespace Gamecore
 
         public void Play()
         {
+            from = transform.position;
             gameObject.LeanCancel(tweenID);
             var _tween = gameObject.LeanMoveLocal(from, moveDuration)
                 .setEase(type)

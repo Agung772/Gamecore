@@ -24,13 +24,11 @@ namespace Gamecore.Animation
                 transform.eulerAngles = from;
             }
             
+            var _tween = gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
+            
             if (loop)
             {
-                gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setLoopType(loopType).setIgnoreTimeScale(useUnScaledTime);
-            }
-            else
-            {
-                gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
+                _tween.setLoopType(loopType);
             }
         }
 

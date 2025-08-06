@@ -25,13 +25,11 @@ namespace Gamecore.Animation
                 transform.localPosition = from;
             }
             
+            var _tween = gameObject.LeanMoveLocal(to, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
+
             if (loop)
             {
-                gameObject.LeanMoveLocal(to, time).setEase(type).setLoopType(loopType).setIgnoreTimeScale(useUnScaledTime);
-            }
-            else
-            {
-                gameObject.LeanMoveLocal(to, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
+                _tween.setLoopType(loopType);
             }
         }
 

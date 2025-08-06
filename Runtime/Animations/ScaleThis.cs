@@ -22,7 +22,7 @@ namespace Gamecore.Animation
         {
             if (isFrom)
             {
-                transform.localPosition = from;
+                transform.localScale = from;
             }
             
             var _tween = gameObject.LeanScale(to, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);

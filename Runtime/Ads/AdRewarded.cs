@@ -37,18 +37,27 @@ namespace Gamecore.Ads
             });
         }
         
-
-        public void Show(Action onRewarded, Action onFailed, Action onClosed)
+        public void Show(Action onComplete, Action onFailed)
         {
             if (IsCanShow())
             {
+                var _isRewarded = false;
+
                 rewardedAd.Show((Reward reward) =>
                 {
-                    onRewarded?.Invoke();
+                    _isRewarded = true;
                 });
+
                 rewardedAd.OnAdFullScreenContentClosed += () =>
                 {
-                    onClosed?.Invoke();
+                    if (_isRewarded)
+                    {
+                        onComplete?.Invoke();
+                    }
+                    else
+                    {
+                        onFailed?.Invoke();
+                    }
                 };
             }
             else

@@ -23,11 +23,6 @@ namespace Gamecore
             return _source;
         }
         
-        public void MuteBGM(bool active)
-        {
-            BGMSource.mute = active;
-        }
-        
         public float BGMVolume
         {
             get => PlayerPrefs.GetFloat("BGMVolume", 1);

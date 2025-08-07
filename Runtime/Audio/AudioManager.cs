@@ -12,6 +12,7 @@ namespace Gamecore
             BGMSource = CreateSource("BGMSource");
             BGMSource.loop = true;
             BGMSource.volume = BGMVolume;
+            
             SFXSource = CreateSource("SFXSource");
             SFXSource.volume = SFXVolume;
         }

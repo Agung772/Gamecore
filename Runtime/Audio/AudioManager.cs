@@ -9,15 +9,16 @@ namespace Gamecore
 
         public override void Initialize()
         {
-            BGMSource = CreateSource("BGMSource");
+            BGMSource = CreateSource("BGM");
             BGMSource.loop = true;
-            SFXSource = CreateSource("SFXSource");
+            SFXSource = CreateSource("SFX");
         }
 
-        private AudioSource CreateSource(string sourceName)
+        private AudioSource CreateSource(string name)
         {
-            var _source = new GameObject(sourceName).AddComponent<AudioSource>();
+            var _source = new GameObject($"{name}Source").AddComponent<AudioSource>();
             _source.transform.SetParent(Game.Manager.transform);
+            _source.volume = PlayerPrefs.GetFloat($"{name}Volume", 1f);
             return _source;
         }
         
@@ -31,14 +32,16 @@ namespace Gamecore
             SFXSource.mute = active;
         }
 
-        public void VolumeBGM(float volume)
+        public void SetBGMVolume(float volume)
         {
             BGMSource.volume = volume;
+            PlayerPrefs.GetFloat("BGMVolume", volume);
         }
         
-        public void VolumeSFX(float volume)
+        public void SetSFXVolume(float volume)
         {
             SFXSource.volume = volume;
+            PlayerPrefs.GetFloat("SFXVolume", volume);
         }
     }
 }

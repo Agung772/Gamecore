@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -30,31 +31,11 @@ namespace Gamecore
             return _popup;
         }
 
-        public void RemoveOnLoaded(bool removeAll)
+        public void RemoveOnLoaded(bool withGlobal = false)
         {
-            if (removeAll)
+            foreach (var _popup in active.Values.ToArray())
             {
-                RemoveAll();
-            }
-            else
-            {
-                RemoveAllLocal();
-            }
-        }
-
-        public void RemoveAll()
-        {
-            foreach (var _popup in active.Values)
-            {
-                Remove(_popup);
-            }
-        }
-        
-        public void RemoveAllLocal()
-        {
-            foreach (var _popup in active.Values)
-            {
-                if (!_popup.isGlobal)
+                if (withGlobal || !_popup.isGlobal)
                 {
                     Remove(_popup);
                 }

@@ -21,5 +21,17 @@ namespace Gamecore
         {
             return MainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0f)).x + offset;
         }
+        public static int DirectionOutOfSide(float target, float position, float center = 0, float offset = 0)
+        {
+            if (position > center)
+            {
+                if (target > GetSideX(offset)) return -1;
+            }
+            else
+            {
+                if (target < -GetSideX(offset)) return 1;
+            }
+            return 0;
+        }
     }
 }

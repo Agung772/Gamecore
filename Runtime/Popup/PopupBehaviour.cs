@@ -8,6 +8,7 @@ namespace Gamecore
 {
     public class PopupBehaviour : MonoBehaviour
     {
+        [FoldoutGroup("Base")] public bool isGlobal;
         [FoldoutGroup("Base")] [SerializeField] private bool autoClose;
         [FoldoutGroup("Base")] [SerializeField, ShowIf("autoClose")] private int closeAfter;
         [FoldoutGroup("Base")] [SerializeField] private Button closeBtn;

@@ -7,28 +7,29 @@ namespace Gamecore
 {
     public class SceneLoader : GlobalBehaviour
     {
-        public event Action OnLoad;
-        public event Action OnUnlooad;
+        public event Action OnLoaded;
+        public event Action OnUnloaded;
 
         public override void Initialize()
         {
             Game.CurrentScene = SceneManager.GetActiveScene().name;
-            SceneManager.sceneLoaded += (_, _) => OnLoad?.Invoke();
-            SceneManager.sceneUnloaded += _ => OnUnlooad?.Invoke();
+            SceneManager.sceneLoaded += (_, _) => OnLoaded?.Invoke();
+            SceneManager.sceneUnloaded += _ => OnUnloaded?.Invoke();
         }
 
-        public void RestratScene()
+        public void RestratScene(Action<float> onProgress = null, bool removeAllPopup = false, Action onComplete = null)
         {
-            LoadScene(Game.CurrentScene);
+            LoadScene(Game.CurrentScene, onProgress, removeAllPopup, onComplete);
         }
         
-        public void LoadScene(string sceneName, Action<float> onProgress = null, Action onComplete = null)
+        public void LoadScene(string sceneName, Action<float> onProgress = null, bool removeAllPopup = false, Action onComplete = null)
         {
-            Game.Manager.StartCoroutine(LoadSceneAsync(sceneName, onProgress, onComplete));
+            Game.Manager.StartCoroutine(LoadSceneAsync(sceneName, onProgress, removeAllPopup, onComplete));
         }
 
-        private IEnumerator LoadSceneAsync(string sceneName, Action<float> onProgress = null, Action onComplete = null)
+        private IEnumerator LoadSceneAsync(string sceneName, Action<float> onProgress = null, bool removeAllPopup = false, Action onComplete = null)
         {
+            Game.Get<Popup>().RemoveOnLoaded(removeAllPopup);
             var _async = SceneManager.LoadSceneAsync(sceneName);
 
             while (_async.isDone)

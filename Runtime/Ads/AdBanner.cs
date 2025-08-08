@@ -15,8 +15,8 @@ namespace Gamecore.Ads
         {
             Request(checkConnection: false);
             Game.Manager.StartCoroutine(Refresh());
-            Game.Get<SceneLoader>().OnLoad += Show;
-            Game.Get<SceneLoader>().OnUnlooad += Hide;
+            Game.Get<SceneLoader>().OnLoaded += Show;
+            Game.Get<SceneLoader>().OnUnloaded += Hide;
         }
 
         public override bool IsCanShow()

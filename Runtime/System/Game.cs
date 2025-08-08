@@ -19,8 +19,8 @@ namespace Gamecore
             CreateGlobal();
             locals = new Dictionary<Type, LocalBehaviour>();
             
-            Get<SceneLoader>().OnLoad += LoadLocal;
-            Get<SceneLoader>().OnUnlooad += UnloadLocal;
+            Get<SceneLoader>().OnLoaded += LoadedLocal;
+            Get<SceneLoader>().OnUnloaded += UnloadedLocal;
         }
 
         public static IEnumerator InitializeCoroutine()
@@ -42,7 +42,7 @@ namespace Gamecore
             return _global;
         }
 
-        private static void LoadLocal()
+        private static void LoadedLocal()
         {
             var _tempLocals = Object.FindObjectsOfType<LocalBehaviour>(true);
             foreach (var _local in _tempLocals) { locals.Add(_local.GetType(), _local); }
@@ -54,7 +54,7 @@ namespace Gamecore
             foreach (var _multilocal in _tempMultilocals) { _multilocal.OnStart(); }
         }
 
-        private static void UnloadLocal()
+        private static void UnloadedLocal()
         {
             locals.Clear();
         }

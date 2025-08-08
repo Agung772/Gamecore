@@ -29,6 +29,37 @@ namespace Gamecore
             if (_popup is not MultipopupBehaviour) active.Add(typeof(T), _popup);
             return _popup;
         }
+
+        public void RemoveOnLoaded(bool removeAll)
+        {
+            if (removeAll)
+            {
+                RemoveAll();
+            }
+            else
+            {
+                RemoveAllLocal();
+            }
+        }
+
+        public void RemoveAll()
+        {
+            foreach (var _popup in active.Values)
+            {
+                Remove(_popup);
+            }
+        }
+        
+        public void RemoveAllLocal()
+        {
+            foreach (var _popup in active.Values)
+            {
+                if (!_popup.isGlobal)
+                {
+                    Remove(_popup);
+                }
+            }
+        }
         
         public bool Remove<T>() where T : PopupBehaviour 
         {

@@ -77,6 +77,7 @@ namespace Gamecore
             }
             else
             {
+                Debug.LogWarning("Storage data not found");
                 foreach (var _storage in storages.Values)
                 {
                     _storage.OnLoad();
@@ -100,7 +101,7 @@ namespace Gamecore
             File.WriteAllText(_pathEditorSave, _json);
             #endif
 
-            Debug.Log($"Save Game Data \n" +
+            Debug.Log($"Save Storage Data \n" +
                       $"Path : {PathFile}");
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,14 +22,14 @@ namespace Gamecore
         {
             return Game.Manager.StartCoroutine(routine);
         }
-        public static void StartCoroutine(this GameObject key, IEnumerator routine)
+        public static void StartCoroutine(this GameObject key, Func<IEnumerator> routineFunc)
         {
-            var _coroutine = ExecuteCoroutine(routine);
+            var _coroutine = ExecuteCoroutine(routineFunc.Invoke());
             TryAddCoroutine(key, _coroutine);
         }
-        public static void StartCoroutine(this GameObject key, float startDelay, IEnumerator routine)
+        public static void StartCoroutine(this GameObject key, float startDelay, Func<IEnumerator> routineFunc)
         {
-            var _coroutine = ExecuteCoroutine(StartCoroutineDelayed(startDelay, routine));
+            var _coroutine = ExecuteCoroutine(StartCoroutineDelayed(startDelay, routineFunc.Invoke()));
             TryAddCoroutine(key, _coroutine);
         }
         private static IEnumerator StartCoroutineDelayed(float startDelay, IEnumerator routine)

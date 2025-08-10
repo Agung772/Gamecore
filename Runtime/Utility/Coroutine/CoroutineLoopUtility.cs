@@ -1,28 +1,24 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gamecore
 {
     public static partial class CoroutineUtility
     {
-        public static void StartCoroutineLoop(this GameObject key, IEnumerator routine)
+        public static void StartCoroutineLoop(this GameObject key, Func<IEnumerator> routineFunc)
         {
-            var _coroutine = ExecuteCoroutine(LoopCoroutine(key, routine));
-
-            if (!coroutines.ContainsKey(key))
-            {
-                coroutines[key] = new List<Coroutine>();
-            }
-
-            coroutines[key].Add(_coroutine);
-        }
-        public static void StartCoroutineLoop(this GameObject key, float startDelay, IEnumerator routine)
-        {
-            var _coroutine = ExecuteCoroutine(StartCoroutineDelayed(startDelay, LoopCoroutine(key, routine))); 
+            var _coroutine = ExecuteCoroutine(LoopCoroutine(key, routineFunc));
             TryAddCoroutine(key, _coroutine);
         }
-        private static IEnumerator LoopCoroutine(GameObject key, IEnumerator routine)
+
+        public static void StartCoroutineLoop(this GameObject key, float startDelay, Func<IEnumerator> routineFunc)
+        {
+            var _coroutine = ExecuteCoroutine(StartCoroutineDelayed(startDelay, LoopCoroutine(key, routineFunc)));
+            TryAddCoroutine(key, _coroutine);
+        }
+
+        private static IEnumerator LoopCoroutine(GameObject key, Func<IEnumerator> routineFunc)
         {
             while (true)
             {
@@ -32,7 +28,7 @@ namespace Gamecore
                     yield break;
                 }
 
-                yield return routine;
+                yield return routineFunc();
             }
         }
     }

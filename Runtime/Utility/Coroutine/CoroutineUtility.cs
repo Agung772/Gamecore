@@ -6,28 +6,45 @@ namespace Gamecore
 {
     public static partial class CoroutineUtility
     {
-        private static Dictionary<GameObject, List<Coroutine>> coroutines = new();
-        
-        public static void StartCoroutine(this GameObject key, IEnumerator routine)
-        {
-            var _coroutine = Game.Manager.StartCoroutine(routine);
+        public static Dictionary<GameObject, List<Coroutine>> coroutines = new();
 
+        private static void TryAddCoroutine(GameObject key, Coroutine routine)
+        {
             if (!coroutines.ContainsKey(key))
             {
                 coroutines[key] = new List<Coroutine>();
             }
 
-            coroutines[key].Add(_coroutine);
+            coroutines[key].Add(routine);
+        }
+        private static Coroutine ExecuteCoroutine(IEnumerator routine)
+        {
+            return Game.Manager.StartCoroutine(routine);
+        }
+        public static void StartCoroutine(this GameObject key, IEnumerator routine)
+        {
+            var _coroutine = ExecuteCoroutine(routine);
+            TryAddCoroutine(key, _coroutine);
+        }
+        public static void StartCoroutine(this GameObject key, float startDelay, IEnumerator routine)
+        {
+            var _coroutine = ExecuteCoroutine(StartCoroutineDelayed(startDelay, routine));
+            TryAddCoroutine(key, _coroutine);
+        }
+        private static IEnumerator StartCoroutineDelayed(float startDelay, IEnumerator routine)
+        {
+            yield return new WaitForSeconds(startDelay);
+            yield return routine;
         }
         public static void StopCoroutine(this GameObject key)
         {
-            if (!coroutines.ContainsKey(key)) return;
+            if (!coroutines.TryGetValue(key, out var _coroutines)) return;
 
-            foreach (var _coroutine in coroutines[key])
+            foreach (var _coroutine in _coroutines)
             {
                 Game.Manager.StopCoroutine(_coroutine);
             }
-            coroutines[key] = null;
+
             coroutines.Remove(key);
         }
         public static bool IsCoroutine(this GameObject key)

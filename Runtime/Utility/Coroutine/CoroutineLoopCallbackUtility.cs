@@ -1,24 +1,22 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gamecore
 {
     public static partial class CoroutineUtility
     {
-        public static void StartCoroutineLoop(this GameObject key, float time, Action callBack)
+        public static void StartCoroutineLoop(this GameObject key, float repeating, Action callBack)
         {
-            var _coroutine = Game.Manager.StartCoroutine(LoopCoroutine(key, time, callBack));
-
-            if (!coroutines.ContainsKey(key))
-            {
-                coroutines[key] = new List<Coroutine>();
-            }
-
-            coroutines[key].Add(_coroutine);
+            var _coroutine = ExecuteCoroutine(LoopCallbackCoroutine(key, repeating, callBack)); 
+            TryAddCoroutine(key, _coroutine);
         }
-        private static IEnumerator LoopCoroutine(GameObject key, float time, Action callBack)
+        public static void StartCoroutineLoop(this GameObject key, float repeating, float startDelay, Action callBack)
+        {
+            var _coroutine = ExecuteCoroutine(StartCoroutineDelayed(startDelay, LoopCallbackCoroutine(key, repeating, callBack))); 
+            TryAddCoroutine(key, _coroutine);
+        }
+        private static IEnumerator LoopCallbackCoroutine(GameObject key, float repeating, Action callBack)
         {
             while (true)
             {
@@ -29,7 +27,7 @@ namespace Gamecore
                 }
             
                 callBack?.Invoke();
-                yield return new WaitForSeconds(time);
+                yield return new WaitForSeconds(repeating);
             }
         }
     }

@@ -8,7 +8,7 @@ namespace Gamecore
     {
         public static void StartCoroutineLoop(this GameObject key, IEnumerator routine)
         {
-            var _coroutine = Game.Manager.StartCoroutine(LoopCoroutine(key, routine));
+            var _coroutine = ExecuteCoroutine(LoopCoroutine(key, routine));
 
             if (!coroutines.ContainsKey(key))
             {
@@ -16,6 +16,11 @@ namespace Gamecore
             }
 
             coroutines[key].Add(_coroutine);
+        }
+        public static void StartCoroutineLoop(this GameObject key, float startDelay, IEnumerator routine)
+        {
+            var _coroutine = ExecuteCoroutine(StartCoroutineDelayed(startDelay, LoopCoroutine(key, routine))); 
+            TryAddCoroutine(key, _coroutine);
         }
         private static IEnumerator LoopCoroutine(GameObject key, IEnumerator routine)
         {

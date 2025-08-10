@@ -1,17 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gamecore
 {
-    public static class CoroutineUtility
+    public static partial class CoroutineUtility
     {
         private static Dictionary<GameObject, List<Coroutine>> coroutines = new();
-    
-        public static void StartLoop(this GameObject key, float time, Action callBack)
+        
+        public static void StartCoroutine(this GameObject key, Coroutine routine)
         {
-            var _coroutine = Game.Manager.StartCoroutine(LoopCoroutine(key, time, callBack));
+            var _coroutine = Game.Manager.StartCoroutine(Coroutine(routine));
 
             if (!coroutines.ContainsKey(key))
             {
@@ -20,7 +19,11 @@ namespace Gamecore
 
             coroutines[key].Add(_coroutine);
         }
-        public static void StopLoop(this GameObject key)
+        private static IEnumerator Coroutine(Coroutine routine)
+        {
+            yield return routine;
+        }
+        public static void StopCoroutine(this GameObject key)
         {
             if (!coroutines.ContainsKey(key)) return;
 
@@ -31,24 +34,9 @@ namespace Gamecore
             coroutines[key] = null;
             coroutines.Remove(key);
         }
-
-        public static bool IsLoop(this GameObject key)
+        public static bool IsCoroutine(this GameObject key)
         {
             return coroutines.ContainsKey(key);
-        }
-        private static IEnumerator LoopCoroutine(GameObject key, float time, Action callBack)
-        {
-            while (true)
-            {
-                if (key == null)
-                {
-                    coroutines.Remove(key);
-                    yield break;
-                }
-            
-                callBack?.Invoke();
-                yield return new WaitForSeconds(time);
-            }
         }
     }
 }

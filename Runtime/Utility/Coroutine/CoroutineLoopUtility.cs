@@ -6,7 +6,7 @@ namespace Gamecore
 {
     public static partial class CoroutineUtility
     {
-        public static void StartCoroutineLoop(this GameObject key, Coroutine routine)
+        public static void StartCoroutineLoop(this GameObject key, IEnumerator routine)
         {
             var _coroutine = Game.Manager.StartCoroutine(LoopCoroutine(key, routine));
 
@@ -17,7 +17,7 @@ namespace Gamecore
 
             coroutines[key].Add(_coroutine);
         }
-        private static IEnumerator LoopCoroutine(GameObject key, Coroutine routine)
+        private static IEnumerator LoopCoroutine(GameObject key, IEnumerator routine)
         {
             while (true)
             {

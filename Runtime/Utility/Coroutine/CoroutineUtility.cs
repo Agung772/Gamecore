@@ -8,9 +8,9 @@ namespace Gamecore
     {
         private static Dictionary<GameObject, List<Coroutine>> coroutines = new();
         
-        public static void StartCoroutine(this GameObject key, Coroutine routine)
+        public static void StartCoroutine(this GameObject key, IEnumerator routine)
         {
-            var _coroutine = Game.Manager.StartCoroutine(Coroutine(routine));
+            var _coroutine = Game.Manager.StartCoroutine(routine);
 
             if (!coroutines.ContainsKey(key))
             {
@@ -18,10 +18,6 @@ namespace Gamecore
             }
 
             coroutines[key].Add(_coroutine);
-        }
-        private static IEnumerator Coroutine(Coroutine routine)
-        {
-            yield return routine;
         }
         public static void StopCoroutine(this GameObject key)
         {

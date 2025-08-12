@@ -16,6 +16,7 @@ namespace Gamecore
             {
                 if (success == SignInStatus.Success)
                 {
+                    Leaderboard = new GoogleLeaderboard();
                     Debug.Log("Login with Google Play games successful.");
                 }
                 else

@@ -12,11 +12,12 @@ namespace Gamecore
         public override void Initialize()
         {
             base.Initialize();
-            PlayGamesPlatform.Activate();
+            Debug.Log("Loading login with Google Play games...");
             Leaderboard = new GoogleLeaderboard();
-            PlayGamesPlatform.Instance.Authenticate((success) =>
+            PlayGamesPlatform.Activate();
+            Social.localUser.Authenticate(success =>
             {
-                if (success == SignInStatus.Success)
+                if (success)
                 {
                     IsAuthenticate = true;
                     Debug.Log("Login with Google Play games successful.");

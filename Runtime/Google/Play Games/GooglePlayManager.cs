@@ -7,6 +7,7 @@ namespace Gamecore
 {
     public class GooglePlayManager : GlobalBehaviour
     {
+        public bool IsAuthenticate {  get; private set; }
         public GoogleLeaderboard Leaderboard {  get; private set; }
         public override void Initialize()
         {
@@ -17,6 +18,7 @@ namespace Gamecore
             {
                 if (success == SignInStatus.Success)
                 {
+                    IsAuthenticate = true;
                     Debug.Log("Login with Google Play games successful.");
                 }
                 else

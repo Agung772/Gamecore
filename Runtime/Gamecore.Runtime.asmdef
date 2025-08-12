@@ -2,7 +2,8 @@
     "name": "Gamecore.Runtime",
     "rootNamespace": "Gamecore",
     "references": [
-        "LeanTween"
+        "LeanTween",
+        "Google.Play.Games"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

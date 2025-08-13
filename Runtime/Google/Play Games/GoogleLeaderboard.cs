@@ -12,7 +12,7 @@ namespace Gamecore.Google
 
         public void ReportScore(long skor)
         {
-            PlayGamesPlatform.Instance.ReportScore(skor, "CgkI6NbynIAVEAIQAA", sukses =>
+            PlayGamesPlatform.Instance.ReportScore(skor, Game.Get<GoogleManager>().Setting.leaderboardID, sukses =>
             {
                 Debug.Log(sukses ? "Skor terkirim" : "Gagal kirim skor");
             });

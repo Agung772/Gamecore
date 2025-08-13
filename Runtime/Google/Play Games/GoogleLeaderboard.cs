@@ -5,6 +5,11 @@ namespace Gamecore.Google
 {
     public class GoogleLeaderboard : GoogleBase
     {
+        public override bool IsCanShow()
+        {
+            return true;
+        }
+
         public void ReportScore(long skor)
         {
             PlayGamesPlatform.Instance.ReportScore(skor, "CgkI6NbynIAVEAIQAA", sukses =>

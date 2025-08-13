@@ -57,7 +57,7 @@ namespace Gamecore.Google
             
             if (!checkConnection || await GameNetwork.IsInternetConnection())
             {
-                data = new BannerView(Game.Get<AdManager>().Setting.bannerID, AdSize.Banner, AdPosition.Top);
+                data = new BannerView(Game.Get<GoogleManager>().Setting.bannerID, AdSize.Banner, AdPosition.Top);
                 data.OnBannerAdLoaded += BannerAdLoaded;
             
                 var _request = new AdRequest();

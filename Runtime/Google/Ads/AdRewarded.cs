@@ -24,7 +24,7 @@ namespace Gamecore.Google
         {
             var _request = new AdRequest();
 
-            RewardedAd.Load(Game.Get<AdManager>().Setting.rewardedID, _request, (RewardedAd ad, LoadAdError error) =>
+            RewardedAd.Load(Game.Get<GoogleManager>().Setting.rewardedID, _request, (RewardedAd ad, LoadAdError error) =>
             {
                 if (error != null || ad == null)
                 {

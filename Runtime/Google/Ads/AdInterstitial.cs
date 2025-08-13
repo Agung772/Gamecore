@@ -17,7 +17,7 @@ namespace Gamecore.Google
         {
             var _adRequest = new AdRequest();
 
-            InterstitialAd.Load(Game.Get<AdManager>().Setting.interstitialID, _adRequest,
+            InterstitialAd.Load(Game.Get<GoogleManager>().Setting.interstitialID, _adRequest,
                 (ad, error) =>
                 {
                     if (error != null || ad == null)

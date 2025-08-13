@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Gamecore.Google
 {
-    public class AdManager : GlobalBehaviour
+    public class GoogleManager : GlobalBehaviour
     {
         private bool hasInitialize;
         private Dictionary<Type, GoogleBase> ads = new();
@@ -59,8 +59,7 @@ namespace Gamecore.Google
                 }
             });
         }
-
-
+        
         public bool TryGet<T>(out T ad) where T : GoogleBase
         {
             if (hasInitialize)

@@ -4,11 +4,11 @@ using System;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
-namespace Gamecore.Ads
+namespace Gamecore.Google
 {
-    public class AdRewarded : AdBase
+    public class AdRewarded : GoogleBase
     {
-        private RewardedAd rewardedAd;
+        private RewardedAd data;
 
         public override void Initialize()
         {
@@ -17,7 +17,7 @@ namespace Gamecore.Ads
         
         public override bool IsCanShow()
         {
-            return rewardedAd != null && rewardedAd.CanShowAd();
+            return data != null && data.CanShowAd();
         }
 
         private void Request()
@@ -32,8 +32,8 @@ namespace Gamecore.Ads
                     return;
                 }
                 
-                rewardedAd = ad;
-                rewardedAd.OnAdFullScreenContentClosed += Request;
+                data = ad;
+                data.OnAdFullScreenContentClosed += Request;
             });
         }
         
@@ -43,12 +43,12 @@ namespace Gamecore.Ads
             {
                 var _isRewarded = false;
 
-                rewardedAd.Show((Reward reward) =>
+                data.Show((Reward reward) =>
                 {
                     _isRewarded = true;
                 });
 
-                rewardedAd.OnAdFullScreenContentClosed += () =>
+                data.OnAdFullScreenContentClosed += () =>
                 {
                     if (_isRewarded)
                     {

@@ -1,12 +1,13 @@
+using GooglePlayGames;
 using UnityEngine;
 
-namespace Gamecore
+namespace Gamecore.Google
 {
-    public class GoogleLeaderboard
+    public class GoogleLeaderboard : GoogleBase
     {
         public void ReportScore(long skor)
         {
-            Social.ReportScore(skor, "CgkI6NbynIAVEAIQAA", sukses =>
+            PlayGamesPlatform.Instance.ReportScore(skor, "CgkI6NbynIAVEAIQAA", sukses =>
             {
                 Debug.Log(sukses ? "Skor terkirim" : "Gagal kirim skor");
             });
@@ -14,7 +15,7 @@ namespace Gamecore
         
         public void Show()
         {
-            Social.ShowLeaderboardUI();
+            PlayGamesPlatform.Instance.ShowLeaderboardUI();
         }
     }
 }

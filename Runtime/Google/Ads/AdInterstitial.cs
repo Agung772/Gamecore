@@ -3,11 +3,11 @@
 using GoogleMobileAds.Api;
 using UnityEngine;
 
-namespace Gamecore.Ads
+namespace Gamecore.Google
 {
-    public class AdInterstitial : AdBase
+    public class AdInterstitial : GoogleBase
     {
-        private InterstitialAd interstitialAd;
+        private InterstitialAd data;
 
         public override void Initialize()
         {
@@ -27,9 +27,9 @@ namespace Gamecore.Ads
                     }
 
                     Debug.Log("Interstitial berhasil dimuat");
-                    interstitialAd = ad;
+                    data = ad;
 
-                    interstitialAd.OnAdFullScreenContentClosed += () =>
+                    data.OnAdFullScreenContentClosed += () =>
                     {
                         Debug.Log("Interstitial ditutup, load ulang lagi");
                         Request();
@@ -39,9 +39,9 @@ namespace Gamecore.Ads
 
         public void Show()
         {
-            if (interstitialAd != null && interstitialAd.CanShowAd())
+            if (data != null && data.CanShowAd())
             {
-                interstitialAd.Show();
+                data.Show();
             }
             else
             {

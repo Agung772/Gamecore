@@ -1,40 +1,67 @@
 #if GOOGLE_MOBILE_ADS
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using GoogleMobileAds.Api;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 using UnityEngine;
 
-namespace Gamecore.Ads
+namespace Gamecore.Google
 {
     public class AdManager : GlobalBehaviour
     {
         private bool hasInitialize;
-        private Dictionary<Type, AdBase> ads;
-        public AdSetting Setting { get; private set; }
+        private Dictionary<Type, GoogleBase> ads = new();
+        public GoogleSetting Setting { get; private set; }
 
-        public override async void Initialize()
+        public override IEnumerator InitializeCoroutine()
         {
-            Setting = Resources.Load<AdSetting>("AdSetting");
-            if (Setting == null) return;
-            
-            ads = new Dictionary<Type, AdBase>();
+            Setting = Resources.Load<GoogleSetting>("");
+            if (Setting == null) yield break;
 
-            if (await GameNetwork.IsInternetConnection() && !Setting.noAds)
+            RequestAdMob(() => { });
+            RequestPlayGames(() => { });
+            
+            ads = InstanceUtility.Create<GoogleBase>();
+            foreach (var _ad in ads.Values)
             {
-                MobileAds.Initialize(_=> 
-                {
-                    hasInitialize = true;
-                    ads = InstanceUtility.Create<AdBase>();
-                    foreach (var _ad in ads.Values)
-                    {
-                        _ad.Initialize();
-                    }
-                });
+                _ad.Initialize();
             }
         }
 
-        public bool TryGet<T>(out T ad) where T : AdBase
+        private async void RequestAdMob(Action onComplete)
+        {
+            if (Setting.noAds) return;
+            if (!await GameNetwork.IsInternetConnection()) return;
+            
+            MobileAds.Initialize(_=> 
+            {
+                hasInitialize = true;
+            });
+        }
+
+        private async void RequestPlayGames(Action onComplete)
+        {
+            if (!await GameNetwork.IsInternetConnection()) return;
+            
+            PlayGamesPlatform.Instance.Authenticate(success =>
+            {
+                if (success == SignInStatus.Success)
+                {
+                    Debug.Log("Login with Google Play games successful.");
+                }
+                else
+                {
+                    Debug.Log("Login Unsuccessful.");
+                }
+            });
+        }
+
+
+        public bool TryGet<T>(out T ad) where T : GoogleBase
         {
             if (hasInitialize)
             {

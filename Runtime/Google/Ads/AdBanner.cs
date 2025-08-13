@@ -4,11 +4,11 @@ using System.Collections;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
-namespace Gamecore.Ads
+namespace Gamecore.Google
 {
-    public class AdBanner : AdBase
+    public class AdBanner : GoogleBase
     {
-        private BannerView bannerView;
+        private BannerView data;
         public bool IsShow { get; private set; }
 
         public override void Initialize()
@@ -21,7 +21,7 @@ namespace Gamecore.Ads
 
         public override bool IsCanShow()
         {
-            return bannerView != null;
+            return data != null;
         }
 
         private IEnumerator Refresh()
@@ -37,32 +37,32 @@ namespace Gamecore.Ads
         {
             if (IsShow) return;
             
-            bannerView.Show();
+            data.Show();
             IsShow = true;
         }
         public void Hide()
         {
             if (!IsShow) return;
             
-            bannerView.Hide();
+            data.Hide();
             IsShow = false;
         }
         private async void Request(bool checkConnection = true)
         {
-            if (bannerView != null)
+            if (data != null)
             {
                 Hide();
-                bannerView.Destroy();
+                data.Destroy();
             }
             
             if (!checkConnection || await GameNetwork.IsInternetConnection())
             {
-                bannerView = new BannerView(Game.Get<AdManager>().Setting.bannerID, AdSize.Banner, AdPosition.Top);
-                bannerView.OnBannerAdLoaded += BannerAdLoaded;
+                data = new BannerView(Game.Get<AdManager>().Setting.bannerID, AdSize.Banner, AdPosition.Top);
+                data.OnBannerAdLoaded += BannerAdLoaded;
             
                 var _request = new AdRequest();
                 IsShow = true;
-                bannerView.LoadAd(_request);
+                data.LoadAd(_request);
             }
         }
         

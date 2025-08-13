@@ -1,6 +1,6 @@
-namespace Gamecore.Ads
+namespace Gamecore.Google
 {
-    public class AdBase
+    public class GoogleBase
     {
         public virtual void Initialize() { }
         public virtual bool IsCanShow() { return false; }

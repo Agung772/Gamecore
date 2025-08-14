@@ -1,3 +1,5 @@
+#if GOOGLE_MOBILE
+
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -14,3 +16,5 @@ namespace Gamecore.Google
         [FoldoutGroup("Play Games")] public string leaderboardID;
     }
 }
+
+#endif

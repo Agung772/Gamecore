@@ -26,7 +26,7 @@ namespace Gamecore
 
             if (_request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogWarning("Internet tidak tersedia: " + _request.error);
+                Debug.LogWarning("Internet not available: " + _request.error);
                 return false;
             }
 
@@ -34,9 +34,9 @@ namespace Gamecore
             var _isSlow = _duration > SLOW_THRESHOLD_SECONDS;
 
             if (_isSlow)
-                Debug.LogWarning($"Internet lambat: {_duration:F2} detik.");
+                Debug.LogWarning($"Slow internet: {_duration:F2} second.");
             else
-                Debug.Log($"Internet cepat: {_duration:F2} detik.");
+                Debug.Log($"Fast internet: {_duration:F2} second.");
 
             return !_isSlow;
         }

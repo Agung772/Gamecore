@@ -1,4 +1,4 @@
-#if GOOGLE_MOBILE_ADS
+#if GOOGLE_MOBILE
 
 using System;
 using GoogleMobileAds.Api;
@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Gamecore.Google
 {
-    public class AdRewarded : GoogleBase
+    public class AdRewarded : AdBase
     {
         private RewardedAd data;
 
@@ -15,7 +15,7 @@ namespace Gamecore.Google
             Request();
         }
         
-        public override bool IsCanShow()
+        public override bool CanShow()
         {
             return data != null && data.CanShowAd();
         }
@@ -24,7 +24,7 @@ namespace Gamecore.Google
         {
             var _request = new AdRequest();
 
-            RewardedAd.Load(Game.Get<GoogleManager>().Setting.rewardedID, _request, (RewardedAd ad, LoadAdError error) =>
+            RewardedAd.Load(Game.Get<AdManager>().Setting.rewardedID, _request, (RewardedAd ad, LoadAdError error) =>
             {
                 if (error != null || ad == null)
                 {
@@ -39,7 +39,7 @@ namespace Gamecore.Google
         
         public void Show(Action onComplete, Action onFailed)
         {
-            if (IsCanShow())
+            if (CanShow())
             {
                 var _isRewarded = false;
 

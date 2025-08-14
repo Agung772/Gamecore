@@ -1,4 +1,4 @@
-#if GOOGLE_MOBILE_ADS
+#if GOOGLE_MOBILE
 
 using System.Collections;
 using GoogleMobileAds.Api;
@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Gamecore.Google
 {
-    public class AdBanner : GoogleBase
+    public class AdBanner : AdBase
     {
         private BannerView data;
         public bool IsShow { get; private set; }
@@ -19,7 +19,7 @@ namespace Gamecore.Google
             Game.Get<SceneLoader>().OnUnloaded += Hide;
         }
 
-        public override bool IsCanShow()
+        public override bool CanShow()
         {
             return data != null;
         }
@@ -57,7 +57,7 @@ namespace Gamecore.Google
             
             if (!checkConnection || await GameNetwork.IsInternetConnection())
             {
-                data = new BannerView(Game.Get<GoogleManager>().Setting.bannerID, AdSize.Banner, AdPosition.Top);
+                data = new BannerView(Game.Get<AdManager>().Setting.bannerID, AdSize.Banner, AdPosition.Top);
                 data.OnBannerAdLoaded += BannerAdLoaded;
             
                 var _request = new AdRequest();

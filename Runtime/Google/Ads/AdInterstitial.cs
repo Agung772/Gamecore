@@ -1,11 +1,11 @@
-#if GOOGLE_MOBILE_ADS
+#if GOOGLE_MOBILE
 
 using GoogleMobileAds.Api;
 using UnityEngine;
 
 namespace Gamecore.Google
 {
-    public class AdInterstitial : GoogleBase
+    public class AdInterstitial : AdBase
     {
         private InterstitialAd data;
 
@@ -17,7 +17,7 @@ namespace Gamecore.Google
         {
             var _adRequest = new AdRequest();
 
-            InterstitialAd.Load(Game.Get<GoogleManager>().Setting.interstitialID, _adRequest,
+            InterstitialAd.Load(Game.Get<AdManager>().Setting.interstitialID, _adRequest,
                 (ad, error) =>
                 {
                     if (error != null || ad == null)

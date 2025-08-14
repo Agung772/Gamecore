@@ -13,7 +13,10 @@ namespace Gamecore.Google
 {
     public class GoogleManager : GlobalBehaviour
     {
-        private bool hasInitialize;
+        private bool hasAdMob;
+        private bool hasPlayGames;
+        public event Action OnInitializePlayGames;
+        
         private Dictionary<Type, GoogleBase> googles = new();
         public GoogleSetting Setting { get; private set; }
 
@@ -39,7 +42,7 @@ namespace Gamecore.Google
             
             MobileAds.Initialize(_=> 
             {
-                hasInitialize = true;
+                hasAdMob = true;
             });
         }
 
@@ -51,10 +54,13 @@ namespace Gamecore.Google
             {
                 if (success == SignInStatus.Success)
                 {
+                    hasPlayGames = true;
+                    OnInitializePlayGames?.Invoke();
                     Debug.Log("Login with Google Play games successful.");
                 }
                 else
                 {
+                    RequestPlayGames(onComplete);
                     Debug.Log("Login Unsuccessful.");
                 }
             });
@@ -62,7 +68,7 @@ namespace Gamecore.Google
         
         public bool TryGet<T>(out T googleBase) where T : GoogleBase
         {
-            if (hasInitialize)
+            if (hasAdMob)
             {
                 if (googles.TryGetValue(typeof(T), out var _google))
                 {
@@ -80,11 +86,7 @@ namespace Gamecore.Google
 
         public bool IsActive<T>() where T : GoogleBase
         {
-            if (TryGet<T>(out _))
-            {
-                return true;
-            }
-            return false;
+            return TryGet<T>(out _);
         }
     }
 }

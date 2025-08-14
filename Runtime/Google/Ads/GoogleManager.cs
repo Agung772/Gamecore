@@ -22,7 +22,7 @@ namespace Gamecore.Google
 
         public override IEnumerator InitializeCoroutine()
         {
-            Setting = Resources.Load<GoogleSetting>("");
+            Setting = Resources.Load<GoogleSetting>("GoogleSetting");
             if (Setting == null) yield break;
 
             RequestAdMob(() => { });

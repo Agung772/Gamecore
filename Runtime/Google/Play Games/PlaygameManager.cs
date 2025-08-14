@@ -36,13 +36,7 @@ namespace Gamecore.Google
             });
         }
 
-        private async void RequestPlayGames(Action onComplete)
-        {
-            if (!await GameNetwork.IsInternetConnection()) return;
-            Authenticate(onComplete);
-        }
-
-        private void Authenticate(Action onComplete)
+        private void RequestPlayGames(Action onComplete)
         {
             PlayGamesPlatform.Instance.Authenticate(success =>
             {
@@ -53,12 +47,12 @@ namespace Gamecore.Google
                 }
                 else
                 {
-                    if (countTryAgain <= maxTryAgain)
+                    if (countTryAgain < maxTryAgain)
                     {
                         countTryAgain++;
-                        Game.Manager.gameObject.LeanDelayedCall(1.5f, () =>
+                        Game.Manager.gameObject.LeanDelayedCall(1f, () =>
                         {
-                            Authenticate(onComplete);
+                            RequestPlayGames(onComplete);
                         });
                     }
  

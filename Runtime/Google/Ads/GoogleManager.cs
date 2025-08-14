@@ -14,7 +14,7 @@ namespace Gamecore.Google
     public class GoogleManager : GlobalBehaviour
     {
         private bool hasInitialize;
-        private Dictionary<Type, GoogleBase> ads = new();
+        private Dictionary<Type, GoogleBase> googles = new();
         public GoogleSetting Setting { get; private set; }
 
         public override IEnumerator InitializeCoroutine()
@@ -25,10 +25,10 @@ namespace Gamecore.Google
             RequestAdMob(() => { });
             RequestPlayGames(() => { });
             
-            ads = InstanceUtility.Create<GoogleBase>();
-            foreach (var _ad in ads.Values)
+            googles = InstanceUtility.Create<GoogleBase>();
+            foreach (var _google in googles.Values)
             {
-                _ad.Initialize();
+                _google.Initialize();
             }
         }
 
@@ -60,21 +60,30 @@ namespace Gamecore.Google
             });
         }
         
-        public bool TryGet<T>(out T ad) where T : GoogleBase
+        public bool TryGet<T>(out T googleBase) where T : GoogleBase
         {
             if (hasInitialize)
             {
-                if (ads.TryGetValue(typeof(T), out var _ad))
+                if (googles.TryGetValue(typeof(T), out var _google))
                 {
-                    if (_ad != null && _ad.IsCanShow())
+                    if (_google != null && _google.IsCanShow())
                     {
-                        ad = (T)_ad;
+                        googleBase = (T)_google;
                         return true;
                     }
                 }
             }
 
-            ad = null;
+            googleBase = null;
+            return false;
+        }
+
+        public bool IsActive<T>() where T : GoogleBase
+        {
+            if (TryGet<T>(out _))
+            {
+                return true;
+            }
             return false;
         }
     }

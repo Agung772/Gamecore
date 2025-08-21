@@ -39,6 +39,8 @@ namespace Gamecore
         }
         public static void StopCoroutine(this GameObject key)
         {
+            if (Game.Manager == null) return;
+            if (coroutines == null) return;
             if (!coroutines.TryGetValue(key, out var _coroutines)) return;
 
             foreach (var _coroutine in _coroutines)

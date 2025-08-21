@@ -9,12 +9,13 @@ namespace Gamecore
         public static void DestroyAllChildren(this Transform parent, bool immediate = false)
         {
             if (parent == null) return;
-            while (parent.childCount > 0)
+            
+            foreach (Transform _child in parent)
             {
                 if (immediate)
-                    Object.DestroyImmediate(parent.GetChild(0).gameObject);
+                    Object.DestroyImmediate(_child.gameObject);
                 else
-                    Object.Destroy(parent.GetChild(0).gameObject);
+                    Object.Destroy(_child.gameObject);
             }
         }
         

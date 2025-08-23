@@ -24,6 +24,7 @@ namespace Gamecore.Google
             Setting = Resources.Load<GoogleSetting>("GoogleSetting");
             if (Setting == null) yield break;
 
+            PlayGamesPlatform.Activate();
             RequestPlayGames(() =>
             {
                 hasInitialize = true;

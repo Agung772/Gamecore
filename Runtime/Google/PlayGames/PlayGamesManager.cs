@@ -10,13 +10,13 @@ using UnityEngine;
 
 namespace Gamecore.Google
 {
-    public class PlaygameManager : GlobalBehaviour
+    public class PlayGamesManager : GlobalBehaviour
     { 
         private bool hasInitialize;
         private int maxTryAgain = 3;
         private int countTryAgain;
         public event Action OnInitialize;
-        private Dictionary<Type, PlaygameBase> instances = new();
+        private Dictionary<Type, PlayGamesBase> instances = new();
         public GoogleSetting Setting { get; private set; }
 
         public override IEnumerator InitializeCoroutine()
@@ -28,7 +28,7 @@ namespace Gamecore.Google
             RequestPlayGames(() =>
             {
                 hasInitialize = true;
-                instances = InstanceUtility.Create<PlaygameBase>();
+                instances = InstanceUtility.Create<PlayGamesBase>();
                 foreach (var _google in instances.Values)
                 {
                     _google.Initialize();
@@ -39,9 +39,9 @@ namespace Gamecore.Google
 
         private void RequestPlayGames(Action onComplete)
         {
-            PlayGamesPlatform.Instance.Authenticate(success =>
+            Social.localUser.Authenticate(success =>
             {
-                if (success == SignInStatus.Success)
+                if (success)
                 {
                     onComplete.Invoke();
                     Debug.Log("Login with Google Play games successful.");
@@ -62,11 +62,11 @@ namespace Gamecore.Google
             });
         }
         
-        public bool IsActive<T>() where T : PlaygameBase
+        public bool IsActive<T>() where T : PlayGamesBase
         {
             return hasInitialize;
         }
-        public T Get<T>() where T : PlaygameBase
+        public T Get<T>() where T : PlayGamesBase
         {
             if (instances.TryGetValue(typeof(T), out var _instance))
             {
@@ -75,7 +75,7 @@ namespace Gamecore.Google
 
             return null;
         }
-        public bool TryGet<T>(out T instance) where T : PlaygameBase
+        public bool TryGet<T>(out T instance) where T : PlayGamesBase
         {
             if (hasInitialize)
             {

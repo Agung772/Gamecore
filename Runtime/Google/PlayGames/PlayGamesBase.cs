@@ -2,7 +2,7 @@
 
 namespace Gamecore.Google
 {
-    public class PlaygameBase
+    public class PlayGamesBase
     {
         public virtual void Initialize() { }
     }

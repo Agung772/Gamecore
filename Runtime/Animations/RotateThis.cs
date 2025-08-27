@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace Gamecore.Animation
 {
-    public class RotateThis : MonoBehaviour
+    public class RotateThis : AnimationBase
     {
-        [SerializeField] private bool useUnScaledTime;
-        
         [SerializeField] private bool isFrom;
         [SerializeField, ShowIf(nameof(isFrom))] private Vector3 from;
         [SerializeField] private Vector3 to;
@@ -14,30 +12,16 @@ namespace Gamecore.Animation
         [SerializeField] private float add = 360;
         [SerializeField] private float time = 1;
         [SerializeField] private LeanTweenType type;
-        
-        [SerializeField] private bool loop;
-        [SerializeField, ShowIf(nameof(loop))] private LeanTweenType loopType;
-        
-        private int tweenID;
-        private void OnEnable()
+
+        public override void Play()
         {
             if (isFrom)
             {
                 transform.eulerAngles = from;
             }
             
-            var _tween = gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
-            
-            if (loop)
-            {
-                _tween.setLoopType(loopType);
-            }
-            tweenID = _tween.id;
-        }
-
-        private void OnDisable()
-        {
-            gameObject.LeanCancel(tweenID);
+            base.descr = gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
+            base.Play();
         }
     }
 }

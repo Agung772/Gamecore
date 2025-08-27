@@ -1,55 +1,29 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Gamecore
 {
-    public class ShakeThis : MonoBehaviour
+    public class ShakeThis : AnimationBase
     {
-        [SerializeField] private bool useUnScaledTime;
-        
         private Vector3 from;
 
-        [SerializeField] private bool autoPlay;
         [SerializeField] private float moveDuration = 0.5f; // Durasi gerakan shake pertama
         [SerializeField] private float shakeOffsetStrength = 0.1f; // Seberapa jauh efek shake dari posisi nol
         [SerializeField] private float returnDuration = 0.2f; // Durasi kembali ke posisi nol
         
-        [SerializeField] private bool loop;
-        [SerializeField, ShowIf(nameof(loop))] private LeanTweenType loopType;
-
-        private int tweenID;
-        
-        private void OnEnable()
+        public override void Play()
         {
-            if (autoPlay)
-            {
-                Play();
-            }
-        }
-
-        private void OnDisable()
-        {
-            gameObject.LeanCancel(tweenID);
-        }
-
-        public void Play()
-        {
+            base.Stop();
             from = transform.localPosition;
-            gameObject.LeanCancel(tweenID);
-            var _tween = gameObject.LeanMoveLocal(from, moveDuration)
+            base.descr = gameObject.LeanMoveLocal(from, moveDuration)
                 .setEase(LeanTweenType.easeShake)
                 .setFrom(from + Random.insideUnitSphere * shakeOffsetStrength)
                 .setOnComplete(() =>
                 {
                     gameObject.LeanMoveLocal(from, returnDuration);
-                }).setIgnoreTimeScale(useUnScaledTime);
-
-            if (loop)
-            {
-                _tween.setLoopType(loopType);
-            }
-            tweenID = _tween.id;
+                }).setIgnoreTimeScale(base.useUnScaledTime);
+            
+            base.Play();
         }
     }
 }

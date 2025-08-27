@@ -11,9 +11,9 @@ namespace Gamecore
         [SerializeField] private float shakeOffsetStrength = 0.1f; // Seberapa jauh efek shake dari posisi nol
         [SerializeField] private float returnDuration = 0.2f; // Durasi kembali ke posisi nol
         
-        public override void Play()
+        protected override void OnEnable()
         {
-            base.Stop();
+            base.OnDisable();
             from = transform.localPosition;
             base.descr = gameObject.LeanMoveLocal(from, moveDuration)
                 .setEase(LeanTweenType.easeShake)
@@ -23,7 +23,7 @@ namespace Gamecore
                     gameObject.LeanMoveLocal(from, returnDuration);
                 }).setIgnoreTimeScale(base.useUnScaledTime);
             
-            base.Play();
+            base.OnEnable();
         }
     }
 }

@@ -5,7 +5,6 @@ namespace Gamecore
 {
     public class AnimationBase : MonoBehaviour
     {
-        [SerializeField] protected bool autoPlay = true;
         [SerializeField] protected bool useUnScaledTime;
         
         [SerializeField] protected bool loop;
@@ -15,26 +14,13 @@ namespace Gamecore
         
         protected virtual void OnEnable()
         {
-            if (autoPlay)
-            {
-                Play();
-            }
-        }
-
-        protected virtual void OnDisable()
-        {
-            Stop();
-        }
-        
-        public virtual void Play()
-        {
             if (loop)
             {
                 descr.setLoopType(loopType);
             }
         }
-        
-        public virtual void Stop()
+
+        protected virtual void OnDisable()
         {
             if (descr != null)
             {
@@ -42,9 +28,9 @@ namespace Gamecore
             }
         }
 
-        public void SetActive(bool active)
+        public void SetEnabled(bool active)
         {
-            gameObject.SetActive(active);
+            enabled = active;
         }
     }
 }

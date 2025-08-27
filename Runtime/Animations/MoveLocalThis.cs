@@ -13,8 +13,9 @@ namespace Gamecore.Animation
         [SerializeField] private float time = 1;
         [SerializeField] private LeanTweenType type;
     
-        public override void Play()
+        protected override void OnEnable()
         {
+            base.OnDisable();
             if (isFrom)
             { 
                 transform.localPosition = from;
@@ -22,7 +23,7 @@ namespace Gamecore.Animation
             
             base.descr = gameObject.LeanMoveLocal(to, time).setEase(type).setIgnoreTimeScale(base.useUnScaledTime);
             
-            base.Play();
+            base.OnEnable();
         }
     }
 }

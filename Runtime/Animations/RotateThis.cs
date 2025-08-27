@@ -13,15 +13,16 @@ namespace Gamecore.Animation
         [SerializeField] private float time = 1;
         [SerializeField] private LeanTweenType type;
 
-        public override void Play()
+        protected override void OnEnable()
         {
+            base.OnDisable();
             if (isFrom)
             {
                 transform.eulerAngles = from;
             }
             
             base.descr = gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
-            base.Play();
+            base.OnEnable();
         }
     }
 }

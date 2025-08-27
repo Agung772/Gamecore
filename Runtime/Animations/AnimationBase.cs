@@ -28,9 +28,14 @@ namespace Gamecore
             }
         }
 
-        public void SetEnabled(bool active)
+        public void Play()
         {
-            enabled = active;
+            enabled = true;
+        }
+        
+        public void Stop()
+        {
+            enabled = false;
         }
     }
 }

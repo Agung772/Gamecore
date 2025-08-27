@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Gamecore
+namespace Gamecore.Animation
 {
     public class AnimationBase : MonoBehaviour
     {

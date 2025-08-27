@@ -1,3 +1,4 @@
+using System;
 using Gamecore.Tool;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -12,18 +13,24 @@ namespace Gamecore.Animation
         
         [SerializeField] private float time = 1;
         [SerializeField] private LeanTweenType type;
-    
-        protected override void OnEnable()
+
+        private void Awake()
         {
-            base.OnDisable();
-            if (isFrom)
+            if (isFrom && !base.autoPlay)
             { 
                 transform.localPosition = from;
             }
-            
+        }
+
+        public override void Play()
+        {
+            base.Stop();
+            if (isFrom && base.autoPlay)
+            { 
+                transform.localPosition = from;
+            }
             base.descr = gameObject.LeanMoveLocal(to, time).setEase(type).setIgnoreTimeScale(base.useUnScaledTime);
-            
-            base.OnEnable();
+            base.Play();
         }
     }
 }

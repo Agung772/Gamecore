@@ -14,16 +14,23 @@ namespace Gamecore.Animation
         
         private int tweenID;
 
-        protected override void OnEnable()
+        private void Awake()
         {
-            base.OnDisable();
-            if (isFrom)
+            if (isFrom && !base.autoPlay)
             {
                 transform.localScale = from;
             }
-            
+        }
+        
+        public override void Play()
+        {
+            base.Stop();
+            if (isFrom && base.autoPlay)
+            {
+                transform.localScale = from;
+            }
             base.descr = gameObject.LeanScale(to, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
-            base.OnEnable();
+            base.Play();
         }
     }
 }

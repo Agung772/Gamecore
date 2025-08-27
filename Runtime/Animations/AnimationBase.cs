@@ -41,5 +41,10 @@ namespace Gamecore
                 gameObject.LeanCancel(descr.id);
             }
         }
+
+        public void SetActive(bool active)
+        {
+            gameObject.SetActive(active);
+        }
     }
 }

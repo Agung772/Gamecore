@@ -46,11 +46,12 @@ namespace Gamecore
         {
             var _tempLocals = Object.FindObjectsOfType<LocalBehaviour>(true);
             foreach (var _local in _tempLocals) { locals.Add(_local.GetType(), _local); }
-            foreach (var _local in _tempLocals) { _local.OnAwake(); }
-            foreach (var _local in _tempLocals) { _local.OnStart(); }
-            
             var _tempMultilocals = Object.FindObjectsOfType<MultilocalBehaviour>(true);
+            
+            foreach (var _local in _tempLocals) { _local.OnAwake(); }
             foreach (var _multilocal in _tempMultilocals) { _multilocal.OnAwake(); }
+            
+            foreach (var _local in _tempLocals) { _local.OnStart(); }
             foreach (var _multilocal in _tempMultilocals) { _multilocal.OnStart(); }
         }
 

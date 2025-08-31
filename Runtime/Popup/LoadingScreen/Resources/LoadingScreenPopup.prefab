@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoPlay: 1
-  useUnScaledTime: 0
+  useUnScaledTime: 1
   isLoop: 1
   loopCount: -1
   loopType: 36

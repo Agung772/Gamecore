@@ -56,7 +56,13 @@ namespace Gamecore.Google
                     }
                     else
                     {
-                        onFailed?.Invoke();
+                        Game.Get<Popup>().Show<LoadingScreenPopup>();
+                        LeanTween.delayedCall(0.5f, () =>
+                        {
+                            if (_isRewarded) onComplete?.Invoke();
+                            else onFailed?.Invoke();
+                            Game.Get<Popup>().Remove<LoadingScreenPopup>();
+                        });
                     }
                 };
             }

@@ -37,7 +37,7 @@ namespace Gamecore.Animation
                         descr.setLoopPingPong(loopCount);
                         break;
                     case LeanTweenType.clamp:
-                        descr.setLoopClamp(loopCount);
+                        descr.setLoopCount(loopCount);
                         break;
                     case LeanTweenType.once:
                         descr.setLoopOnce();

@@ -8,8 +8,9 @@ namespace Gamecore.Animation
         [SerializeField] protected bool autoPlay = true;
         [SerializeField] protected bool useUnScaledTime;
         
-        [SerializeField] protected bool loop;
-        [SerializeField, ShowIf(nameof(loop))] protected LeanTweenType loopType;
+        [SerializeField] protected bool isLoop;
+        [SerializeField, ShowIf(nameof(isLoop))] protected int loopCount = -1;
+        [SerializeField, ShowIf(nameof(isLoop))] protected LeanTweenType loopType = LeanTweenType.clamp;
         
         protected LTDescr descr;
         
@@ -28,9 +29,24 @@ namespace Gamecore.Animation
 
         public virtual void Play()
         {
-            if (loop)
+            if (isLoop)
             {
-                descr.setLoopType(loopType);
+                switch (loopType)
+                {
+                    case LeanTweenType.pingPong:
+                        descr.setLoopPingPong(loopCount);
+                        break;
+                    case LeanTweenType.clamp:
+                        descr.setLoopClamp(loopCount);
+                        break;
+                    case LeanTweenType.once:
+                        descr.setLoopOnce();
+                        break;
+                    default:
+                        descr.setLoopCount(loopCount);
+                        break;
+                }
+ 
             }
         }
         

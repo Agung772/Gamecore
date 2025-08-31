@@ -54,6 +54,25 @@ namespace Gamecore
     
             return origins[_resultIndex];
         }
+        public static void RegisterNonRepeatingRandom<T>(this T[] origins)
+        {
+            if (origins == null || origins.Length == 0) return;
+            var _key = RuntimeHelpers.GetHashCode(origins);
+            if (!arrayUsageStates.ContainsKey(_key))
+            {
+                arrayUsageStates.Add(_key, new bool[origins.Length]);
+            }
+        }
+        public static void SetValueNonRepeatingRandom<T>(this T[] origins, int index, bool value)
+        {
+            if (origins == null || origins.Length == 0) return;
+            var _key = RuntimeHelpers.GetHashCode(origins);
+            if (!arrayUsageStates.ContainsKey(_key)) return;
+            var _values = arrayUsageStates[_key];
+            if (index < 0 || index >= _values.Length) return;
+            
+            _values[index] = value;
+        }
     }
 }
 

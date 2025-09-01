@@ -62,7 +62,7 @@ namespace Gamecore.Google
                             if (_isRewarded) onComplete?.Invoke();
                             else onFailed?.Invoke();
                             Game.Get<Popup>().Remove<LoadingScreenPopup>();
-                        });
+                        }).setIgnoreTimeScale(true);
                     }
                 };
             }

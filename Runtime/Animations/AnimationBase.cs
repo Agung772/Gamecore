@@ -57,5 +57,7 @@ namespace Gamecore.Animation
                 gameObject.LeanCancel(descr.id);
             }
         }
+        
+        public virtual void ToDefault() { }
     }
 }

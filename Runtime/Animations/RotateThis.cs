@@ -30,6 +30,12 @@ namespace Gamecore.Animation
             base.descr = gameObject.LeanRotateAroundLocal(to, add, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
             base.Play();
         }
+        
+        public override void ToDefault()
+        {
+            base.ToDefault();
+            if (isFrom) transform.eulerAngles = from;
+        }
     }
 }
 

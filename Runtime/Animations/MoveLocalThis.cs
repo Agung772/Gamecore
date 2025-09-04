@@ -32,5 +32,11 @@ namespace Gamecore.Animation
             base.descr = gameObject.LeanMoveLocal(to, time).setEase(type).setIgnoreTimeScale(base.useUnScaledTime);
             base.Play();
         }
+
+        public override void ToDefault()
+        {
+            base.ToDefault();
+            if (isFrom) transform.localPosition = from;
+        }
     }
 }

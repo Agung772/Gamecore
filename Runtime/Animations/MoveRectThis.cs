@@ -35,5 +35,11 @@ namespace Gamecore.Animation
             base.descr = rectTransform.LeanMove(to, time).setEase(type).setIgnoreTimeScale(base.useUnScaledTime);
             base.Play();
         }
+        
+        public override void ToDefault()
+        {
+            base.ToDefault();
+            if (isFrom) rectTransform.anchoredPosition = from;
+        }
     }
 }

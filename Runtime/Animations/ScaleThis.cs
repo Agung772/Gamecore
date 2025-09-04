@@ -35,6 +35,7 @@ namespace Gamecore.Animation
         
         public override void ToDefault(bool fasted = false)
         {
+            base.Stop();
             base.ToDefault(fasted);
             if (isFrom)
             {

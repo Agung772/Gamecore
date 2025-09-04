@@ -33,10 +33,14 @@ namespace Gamecore.Animation
             base.Play();
         }
         
-        public override void ToDefault()
+        public override void ToDefault(bool fasted = false)
         {
-            base.ToDefault();
-            if (isFrom) transform.localScale = from;
+            base.ToDefault(fasted);
+            if (isFrom)
+            {
+                if (fasted) transform.localScale = from;
+                else gameObject.LeanScale(from, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
+            }
         }
     }
 }

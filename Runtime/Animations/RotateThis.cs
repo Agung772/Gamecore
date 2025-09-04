@@ -31,10 +31,14 @@ namespace Gamecore.Animation
             base.Play();
         }
         
-        public override void ToDefault()
+        public override void ToDefault(bool fasted = false)
         {
-            base.ToDefault();
-            if (isFrom) transform.eulerAngles = from;
+            base.ToDefault(fasted);
+            if (isFrom)
+            {
+                if (fasted) transform.eulerAngles = from;
+                else gameObject.LeanRotateAroundLocal(from, add, time).setEase(type).setIgnoreTimeScale(useUnScaledTime);
+            }
         }
     }
 }

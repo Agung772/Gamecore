@@ -33,10 +33,14 @@ namespace Gamecore.Animation
             base.Play();
         }
 
-        public override void ToDefault()
+        public override void ToDefault(bool fasted = false)
         {
-            base.ToDefault();
-            if (isFrom) transform.localPosition = from;
+            base.ToDefault(fasted);
+            if (isFrom)
+            {
+                if (fasted) transform.localPosition = from;
+                else gameObject.LeanMoveLocal(from, time).setEase(type).setIgnoreTimeScale(base.useUnScaledTime);
+            }
         }
     }
 }

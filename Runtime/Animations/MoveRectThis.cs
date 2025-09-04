@@ -36,10 +36,14 @@ namespace Gamecore.Animation
             base.Play();
         }
         
-        public override void ToDefault()
+        public override void ToDefault(bool fasted = false)
         {
-            base.ToDefault();
-            if (isFrom) rectTransform.anchoredPosition = from;
+            base.ToDefault(fasted);
+            if (isFrom)
+            {
+                if (fasted) rectTransform.anchoredPosition= from;
+                else rectTransform.LeanMove(from, time).setEase(type).setIgnoreTimeScale(base.useUnScaledTime);
+            }
         }
     }
 }

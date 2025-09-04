@@ -58,6 +58,6 @@ namespace Gamecore.Animation
             }
         }
         
-        public virtual void ToDefault() { }
+        public virtual void ToDefault(bool fasted = false) { }
     }
 }

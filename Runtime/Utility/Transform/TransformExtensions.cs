@@ -10,12 +10,13 @@ namespace Gamecore
         {
             if (parent == null) return;
             
-            foreach (Transform _child in parent)
+            while (parent.childCount > 0)
             {
+                var _child = parent.GetChild(0).gameObject;
                 if (immediate)
-                    Object.DestroyImmediate(_child.gameObject);
+                    Object.DestroyImmediate(_child);
                 else
-                    Object.Destroy(_child.gameObject);
+                    Object.Destroy(_child);
             }
         }
         

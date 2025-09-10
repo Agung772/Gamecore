@@ -13,10 +13,7 @@ namespace Gamecore
             for (int i = parent.childCount - 1; i >= 0; i--)
             {
                 var _child = parent.GetChild(i).gameObject;
-                if (immediate)
-                    Object.DestroyImmediate(_child);
-                else
-                    Object.Destroy(_child);
+                DestroyObject(_child, immediate);
             }
         }
         
@@ -26,10 +23,7 @@ namespace Gamecore
             if (parent.childCount == 0) return;
 
             var _child = parent.GetChild(0).gameObject;
-            if (immediate)
-                Object.DestroyImmediate(_child);
-            else
-                Object.Destroy(_child);
+            DestroyObject(_child, immediate);
         }
         
         public static void DestroyLastChild(this Transform parent, bool immediate = false)
@@ -38,10 +32,19 @@ namespace Gamecore
             if (parent.childCount == 0) return;
 
             var _child = parent.GetChild(parent.childCount - 1).gameObject;
+            DestroyObject(_child, immediate);
+        }
+
+        private static void DestroyObject(GameObject go, bool immediate)
+        {
             if (immediate)
-                Object.DestroyImmediate(_child);
+            {
+                Object.DestroyImmediate(go);
+            }
             else
-                Object.Destroy(_child);
+            {
+                Object.Destroy(go);
+            }
         }
     }
 }

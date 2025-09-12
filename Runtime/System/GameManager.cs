@@ -8,8 +8,8 @@ namespace Gamecore
     [DefaultExecutionOrder(-1000)]
     public class GameManager : MonoBehaviour
     {
-        public RectTransform Canvas => canvas;
-        [SerializeField] private RectTransform canvas;
+        public RectTransform Canvas => canvas; [SerializeField] private RectTransform canvas;
+        public RectTransform CanvasPrefab => canvasPrefab; [SerializeField] private RectTransform canvasPrefab;
         
         #if UNITY_EDITOR
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

@@ -23,12 +23,29 @@ namespace Gamecore
         public PopupBehaviour Show<T>(PopupPacket popupPacket = null) where T : PopupBehaviour
         {
             var _prefab = resources[typeof(T)];
-            PopupBehaviour _popup;
-            if (popupPacket is PopupWorldPacket) _popup = Object.Instantiate(_prefab).GetComponent<PopupBehaviour>();
-            else _popup = Object.Instantiate(_prefab, Game.Manager.Canvas).GetComponent<PopupBehaviour>();
+            var _popup = SpawnPopup(_prefab, popupPacket);
             _popup.Initialize(popupPacket);
             if (_popup is not MultipopupBehaviour) active.Add(typeof(T), _popup);
             return _popup;
+        }
+
+        private PopupBehaviour SpawnPopup(PopupBehaviour prefab, PopupPacket popupPacket)
+        {
+            if (popupPacket is PopupWorldPacket)
+            {
+                return Object.Instantiate(prefab).GetComponent<PopupBehaviour>();
+            }
+            
+            if (prefab.setOrder)
+            {
+                var _canvas = Object.Instantiate(Game.Manager.CanvasPrefab, Game.Manager.transform);
+                _canvas.GetComponent<Canvas>().sortingOrder = prefab.sortOrder;
+                var _popup = Object.Instantiate(prefab, _canvas);
+                _popup.popupPacket.onClose += () => Object.Destroy(_canvas.gameObject);
+                return _popup;
+            }
+            
+            return Object.Instantiate(prefab, Game.Manager.Canvas);
         }
 
         public void RemoveOnLoaded(bool withGlobal = false)

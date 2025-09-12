@@ -22,7 +22,7 @@ namespace Gamecore
         {
             if (closeBtn)
             {
-                closeBtn.onClick.AddListener(() => Game.Get<Popup>().Remove(this));
+                closeBtn.onClick.AddListener(Close);
             }
 
             if (autoClose)

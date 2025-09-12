@@ -60,7 +60,7 @@ namespace Gamecore
             {
                 if (spriteRenderer) spriteRenderer.sprite = _sprite;
                 else if (image) image.sprite = _sprite;
-                yield return new WaitForSeconds(fps);
+                yield return new WaitForSeconds(1 / fps);
             }
 
             if (!isLoop)

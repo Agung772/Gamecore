@@ -8,7 +8,7 @@ namespace Gamecore
 {
     public class Popup : GlobalBehaviour
     {
-        private Dictionary<Type, PopupBehaviour> active = new();
+        public Dictionary<Type, PopupBehaviour> active = new();
         private Dictionary<Type, PopupBehaviour> resources = new();
 
         public override void Initialize()
@@ -63,8 +63,6 @@ namespace Gamecore
         {
             if (TryGet<T>(out var _popup))
             {
-                Object.Destroy(_popup.gameObject);
-                active.Remove(typeof(T));
                 _popup.Close(); 
                 return true;
             }
@@ -76,9 +74,7 @@ namespace Gamecore
         {
             if (active.ContainsKey(popup.GetType()))
             {
-                popup.Close(); 
-                Object.Destroy(popup.gameObject);
-                active.Remove(popup.GetType());
+                popup.Close();
                 return true;
             }
             

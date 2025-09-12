@@ -27,18 +27,15 @@ namespace Gamecore
 
             if (autoClose)
             {
-                gameObject.LeanDelayedCall(closeAfter, Remove);
+                gameObject.LeanDelayedCall(closeAfter, Close);
             }
-        }
-
-        public virtual void Remove()
-        {
-            Game.Get<Popup>().Remove(this);
         }
     
         public virtual void Close()
         {
             onClose?.Invoke();
+            Game.Get<Popup>().active.Remove(GetType());
+            Destroy(gameObject);
         }
     }
 }

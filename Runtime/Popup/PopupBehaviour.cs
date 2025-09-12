@@ -24,9 +24,14 @@ namespace Gamecore
             {
                 gameObject.LeanDelayedCall(closeAfter, () =>
                 {
-                    Game.Get<Popup>().Remove(this);
+                    Remove();
                 });
             }
+        }
+
+        public virtual void Remove()
+        {
+            Game.Get<Popup>().Remove(this);
         }
     
         public virtual void OnClose()

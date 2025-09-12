@@ -20,13 +20,13 @@ namespace Gamecore
             }
         }
 
-        public PopupBehaviour Show<T>() where T : PopupBehaviour
+        public T Show<T>() where T : PopupBehaviour
         {
             var _prefab = resources[typeof(T)];
             var _popup = SpawnPopup(_prefab);
             _popup.Initialize();
             if (_popup is not MultiPopupBehaviour) active.Add(typeof(T), _popup);
-            return _popup;
+            return (T)_popup;
         }
 
         private PopupBehaviour SpawnPopup(PopupBehaviour prefab)

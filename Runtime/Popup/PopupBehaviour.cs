@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +15,11 @@ namespace Gamecore
         [FoldoutGroup("Base")] [SerializeField] private bool autoClose;
         [FoldoutGroup("Base")] [SerializeField, ShowIf("autoClose")] private int closeAfter;
         [FoldoutGroup("Base")] [SerializeField] private Button closeBtn;
-        public PopupPacket popupPacket;
+        
+        public Action onClose;
     
-        public virtual void Initialize(PopupPacket packet = null)
+        public virtual void Initialize()
         {
-            popupPacket = packet;
             if (closeBtn)
             {
                 closeBtn.onClick.AddListener(() => Game.Get<Popup>().Remove(this));
@@ -35,12 +36,9 @@ namespace Gamecore
             Game.Get<Popup>().Remove(this);
         }
     
-        public virtual void OnClose()
+        public virtual void Close()
         {
-            if (popupPacket != null)
-            {
-                popupPacket.onClose?.Invoke();
-            }
+            onClose?.Invoke();
         }
     }
 }

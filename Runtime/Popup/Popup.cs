@@ -20,18 +20,18 @@ namespace Gamecore
             }
         }
 
-        public PopupBehaviour Show<T>(PopupPacket popupPacket = null) where T : PopupBehaviour
+        public PopupBehaviour Show<T>() where T : PopupBehaviour
         {
             var _prefab = resources[typeof(T)];
-            var _popup = SpawnPopup(_prefab, popupPacket);
-            _popup.Initialize(popupPacket);
-            if (_popup is not MultipopupBehaviour) active.Add(typeof(T), _popup);
+            var _popup = SpawnPopup(_prefab);
+            _popup.Initialize();
+            if (_popup is not MultiPopupBehaviour) active.Add(typeof(T), _popup);
             return _popup;
         }
 
-        private PopupBehaviour SpawnPopup(PopupBehaviour prefab, PopupPacket popupPacket)
+        private PopupBehaviour SpawnPopup(PopupBehaviour prefab)
         {
-            if (popupPacket is PopupWorldPacket)
+            if (prefab is WorldPopupBehaviour)
             {
                 return Object.Instantiate(prefab).GetComponent<PopupBehaviour>();
             }
@@ -41,7 +41,7 @@ namespace Gamecore
                 var _canvas = Object.Instantiate(Game.Manager.CanvasPrefab, Game.Manager.transform);
                 _canvas.GetComponent<Canvas>().sortingOrder = prefab.sortOrder;
                 var _popup = Object.Instantiate(prefab, _canvas);
-                _popup.popupPacket.onClose += () => Object.Destroy(_canvas.gameObject);
+                _popup.onClose += () => Object.Destroy(_canvas.gameObject);
                 return _popup;
             }
             
@@ -65,7 +65,7 @@ namespace Gamecore
             {
                 Object.Destroy(_popup.gameObject);
                 active.Remove(typeof(T));
-                _popup.OnClose(); 
+                _popup.Close(); 
                 return true;
             }
             
@@ -76,7 +76,7 @@ namespace Gamecore
         {
             if (active.ContainsKey(popup.GetType()))
             {
-                popup.OnClose(); 
+                popup.Close(); 
                 Object.Destroy(popup.gameObject);
                 active.Remove(popup.GetType());
                 return true;

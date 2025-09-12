@@ -4,15 +4,15 @@ namespace Gamecore
 {
     public class LoadingScreenPopup : PopupBehaviour
     {
-        public override void Initialize(PopupPacket packet = null)
+        public override void Initialize()
         {
-            base.Initialize(packet);
+            base.Initialize();
             Time.timeScale = 0f;
         }
 
-        public override void OnClose()
+        public override void Close()
         {
-            base.OnClose();
+            base.Close();
             Time.timeScale = 1f;
         }
     }

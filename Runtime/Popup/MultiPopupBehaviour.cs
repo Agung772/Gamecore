@@ -1,6 +1,6 @@
 namespace Gamecore
 {
-    public class MultipopupBehaviour : PopupBehaviour
+    public class MultiPopupBehaviour : PopupBehaviour
     {
         public override void Remove()
         {

@@ -29,7 +29,6 @@ namespace Gamecore
 
         private IEnumerator LoadSceneAsync(string sceneName, Action<float> onProgress = null, bool removeAllPopup = false, Action onComplete = null)
         {
-            LeanTween.cancelAll();
             Game.Get<Popup>().RemoveOnLoaded(removeAllPopup);
             var _async = SceneManager.LoadSceneAsync(sceneName);
 

@@ -28,7 +28,7 @@ namespace Gamecore
 
             if (autoClose)
             {
-                gameObject.LeanDelayedCall(closeAfter, Close).setIgnoreTimeScale(useUnScaledTime);;
+                gameObject.LeanDelayedCall(closeAfter, Close).setIgnoreTimeScale(useUnScaledTime);
             }
         }
     

@@ -22,10 +22,7 @@ namespace Gamecore
 
             if (autoClose)
             {
-                gameObject.LeanDelayedCall(closeAfter, () =>
-                {
-                    Remove();
-                });
+                gameObject.LeanDelayedCall(closeAfter, Remove);
             }
         }
 

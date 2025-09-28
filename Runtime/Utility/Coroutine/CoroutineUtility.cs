@@ -7,53 +7,88 @@ namespace Gamecore
 {
     public static partial class CoroutineUtility
     {
-        public static Dictionary<GameObject, List<Coroutine>> coroutines = new();
+        public static Dictionary<GameObject, List<Coroutine>> Coroutines = new();
 
         private static void TryAddCoroutine(GameObject key, Coroutine routine)
         {
-            if (!coroutines.ContainsKey(key))
+            if (!Coroutines.ContainsKey(key))
             {
-                coroutines[key] = new List<Coroutine>();
+                Coroutines[key] = new List<Coroutine>();
+            }
+            Coroutines[key].Add(routine);
+        }
+
+        private static void RemoveCoroutine(GameObject key, Coroutine routine)
+        {
+            if (!Coroutines.TryGetValue(key, out var _list)) return;
+            _list.Remove(routine);
+            if (_list.Count == 0) Coroutines.Remove(key);
+        }
+
+        private static Coroutine ExecuteCoroutine(GameObject key, IEnumerator routine)
+        {
+            Coroutine _coroutineHandle = null;
+
+            IEnumerator Wrapper()
+            {
+                yield return routine;
+                RemoveCoroutine(key, _coroutineHandle);
             }
 
-            coroutines[key].Add(routine);
+            _coroutineHandle = Game.Manager.StartCoroutine(Wrapper());
+            return _coroutineHandle;
         }
-        private static Coroutine ExecuteCoroutine(IEnumerator routine)
-        {
-            return Game.Manager.StartCoroutine(routine);
-        }
+
         public static void StartCoroutine(this GameObject key, Func<IEnumerator> routineFunc)
         {
-            var _coroutine = ExecuteCoroutine(routineFunc.Invoke());
+            var _coroutine = ExecuteCoroutine(key, routineFunc.Invoke());
             TryAddCoroutine(key, _coroutine);
         }
+
         public static void StartCoroutine(this GameObject key, float startDelay, Func<IEnumerator> routineFunc)
         {
-            var _coroutine = ExecuteCoroutine(StartCoroutineDelayed(startDelay, routineFunc.Invoke()));
+            var _coroutine = ExecuteCoroutine(key, StartCoroutineDelayed(startDelay, routineFunc.Invoke()));
             TryAddCoroutine(key, _coroutine);
         }
+
         private static IEnumerator StartCoroutineDelayed(float startDelay, IEnumerator routine)
         {
             yield return new WaitForSeconds(startDelay);
             yield return routine;
         }
+
         public static void StopCoroutine(this GameObject key)
         {
             if (Game.Manager == null) return;
-            if (coroutines == null) return;
-            if (!coroutines.TryGetValue(key, out var _coroutines)) return;
 
-            foreach (var _coroutine in _coroutines)
+            if (Coroutines.TryGetValue(key, out var _list))
             {
-                Game.Manager.StopCoroutine(_coroutine);
+                foreach (var _routine in _list)
+                {
+                    if (_routine != null)
+                    {
+                        Game.Manager.StopCoroutine(_routine);
+                    }
+                }
+                Coroutines.Remove(key);
             }
 
-            coroutines.Remove(key);
+            if (CoroutinesWithId.TryGetValue(key, out var _dict))
+            {
+                foreach (var _kvp in _dict)
+                {
+                    if (_kvp.Value != null)
+                    {
+                        Game.Manager.StopCoroutine(_kvp.Value);
+                    }
+                }
+                CoroutinesWithId.Remove(key);
+            }
         }
+        
         public static bool IsCoroutine(this GameObject key)
         {
-            return coroutines.ContainsKey(key);
+            return Coroutines.ContainsKey(key);
         }
     }
 }
-

@@ -8,13 +8,13 @@ namespace Gamecore
     {
         public static void StartCoroutineLoop(this GameObject key, Func<IEnumerator> routineFunc)
         {
-            var _coroutine = ExecuteCoroutine(LoopCoroutine(key, routineFunc));
+            var _coroutine = ExecuteCoroutine(key, LoopCoroutine(key, routineFunc));
             TryAddCoroutine(key, _coroutine);
         }
 
         public static void StartCoroutineLoop(this GameObject key, float startDelay, Func<IEnumerator> routineFunc)
         {
-            var _coroutine = ExecuteCoroutine(StartCoroutineDelayed(startDelay, LoopCoroutine(key, routineFunc)));
+            var _coroutine = ExecuteCoroutine(key, StartCoroutineDelayed(startDelay, LoopCoroutine(key, routineFunc)));
             TryAddCoroutine(key, _coroutine);
         }
 
@@ -24,7 +24,7 @@ namespace Gamecore
             {
                 if (key == null)
                 {
-                    coroutines.Remove(key);
+                    Coroutines.Remove(key);
                     yield break;
                 }
 

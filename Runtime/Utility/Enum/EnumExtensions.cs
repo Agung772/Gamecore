@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Gamecore
+namespace ACore
 {
     public static class EnumExtensions
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace Gamecore
+namespace ACore
 {
     [Serializable] 
     public class SerializedDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver 

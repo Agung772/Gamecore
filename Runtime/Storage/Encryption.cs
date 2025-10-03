@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Gamecore
+namespace ACore
 {
     public static class Encryption
     {

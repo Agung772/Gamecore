@@ -8,7 +8,7 @@ using UnityEditor.Toolbars;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Gamecore.Tool
+namespace ACore.Tool
 {
     [Overlay(typeof(SceneView), "Scene", true)]
     public class SceneToolbarOverlay : ToolbarOverlay{

@@ -1,7 +1,7 @@
 using System;
 using Sirenix.OdinInspector;
 
-namespace Gamecore
+namespace ACore
 {
     [Serializable, InlineProperty]
     public struct FloatRange

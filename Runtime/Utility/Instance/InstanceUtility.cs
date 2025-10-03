@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gamecore
+namespace ACore
 {
     public static class InstanceUtility
     {

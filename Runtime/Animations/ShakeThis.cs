@@ -1,7 +1,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Gamecore.Animation
+namespace ACore.Animation
 {
     public class ShakeThis : AnimationBase
     {

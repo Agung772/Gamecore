@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace Gamecore
+namespace ACore
 {
     public class Storage : GlobalBehaviour
     {

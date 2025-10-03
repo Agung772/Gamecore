@@ -3,7 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Gamecore
+namespace ACore
 {
     [DefaultExecutionOrder(-1000)]
     public class GameManager : MonoBehaviour

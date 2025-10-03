@@ -1,4 +1,4 @@
-namespace Gamecore
+namespace ACore
 {
     public class MultiPopupBehaviour : PopupBehaviour
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Random = UnityEngine.Random;
 
-namespace Gamecore
+namespace ACore
 {
     public static class NonRepeatingRandomExtensions
     {

@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gamecore.Animation
+namespace ACore.Animation
 {
     public class ColorThis : AnimationBase
     {

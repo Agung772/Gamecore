@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using UnityEngine.Networking;
 using Debug = UnityEngine.Debug;
 
-namespace Gamecore
+namespace ACore
 {
     public static class GameNetwork
     {

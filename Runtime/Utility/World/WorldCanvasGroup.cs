@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gamecore
+namespace ACore
 {
     [DisallowMultipleComponent]
     public class WorldCanvasGroup : MonoBehaviour

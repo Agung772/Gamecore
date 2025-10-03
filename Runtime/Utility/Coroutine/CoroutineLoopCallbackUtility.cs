@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Gamecore
+namespace ACore
 {
     public static partial class CoroutineUtility
     {

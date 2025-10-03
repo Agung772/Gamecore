@@ -1,9 +1,9 @@
 using System;
-using Gamecore.Tool;
+using ACore.Tool;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Gamecore.Animation
+namespace ACore.Animation
 {
     public class MoveLocalThis : AnimationBase
     {

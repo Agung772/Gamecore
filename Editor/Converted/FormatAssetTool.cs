@@ -4,7 +4,7 @@ using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Gamecore.Editor
+namespace ACore.Editor
 {
     public class FormatAssetTool : OdinEditorWindow
     {

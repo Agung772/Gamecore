@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Gamecore
+namespace ACore
 {
     public static class AudioExtensions
     {

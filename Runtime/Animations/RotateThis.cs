@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Gamecore.Animation
+namespace ACore.Animation
 {
     public class RotateThis : AnimationBase
     {

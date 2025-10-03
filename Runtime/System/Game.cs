@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Gamecore
+namespace ACore
 {
     public static class Game
     {
@@ -19,7 +19,6 @@ namespace Gamecore
             CreateGlobal();
             locals = new Dictionary<Type, LocalBehaviour>();
             
-            Get<SceneLoader>().OnLoaded += LoadedLocal;
             Get<SceneLoader>().OnUnloaded += UnloadedLocal;
         }
 
@@ -42,19 +41,6 @@ namespace Gamecore
             return _global;
         }
 
-        private static void LoadedLocal()
-        {
-            var _tempLocals = Object.FindObjectsOfType<LocalBehaviour>(true);
-            foreach (var _local in _tempLocals) { locals.Add(_local.GetType(), _local); }
-            var _tempMultilocals = Object.FindObjectsOfType<MultilocalBehaviour>(true);
-            
-            foreach (var _local in _tempLocals) { _local.OnAwake(); }
-            foreach (var _multilocal in _tempMultilocals) { _multilocal.OnAwake(); }
-            
-            foreach (var _local in _tempLocals) { _local.OnStart(); }
-            foreach (var _multilocal in _tempMultilocals) { _multilocal.OnStart(); }
-        }
-
         private static void UnloadedLocal()
         {
             locals.Clear();
@@ -62,18 +48,32 @@ namespace Gamecore
 
         public static bool TryGet<T>(out T behaviour) where T : class, IBehaviour
         {
-            if (globals == null) { behaviour = null; return false; }
-            if (globals.TryGetValue(typeof(T), out var _global) && _global is T _castedGlobal)
+            if (typeof(GlobalBehaviour).IsAssignableFrom(typeof(T)))
             {
-                behaviour = _castedGlobal;
-                return true;
-            }
+                if (globals.TryGetValue(typeof(T), out var _global) && _global is T _castedGlobal)
+                {
+                    behaviour = _castedGlobal;
+                    return true;
+                }
 
-            if (locals == null) { behaviour = null; return false; }
-            if (locals.TryGetValue(typeof(T), out var _local) && _local is T _castedLocal)
+                behaviour = null;
+                return false;
+            }
+            
+            if (typeof(LocalBehaviour).IsAssignableFrom(typeof(T)))
             {
-                behaviour = _castedLocal;
-                return true;
+                if (locals.TryGetValue(typeof(T), out var _local) && _local is T _castedLocal)
+                {
+                    behaviour = _castedLocal;
+                    return true;
+                }
+
+                if (Object.FindObjectOfType(typeof(T), true) is T _found)
+                {
+                    locals[typeof(T)] = (LocalBehaviour)(object)_found;
+                    behaviour = _found;
+                    return true;
+                }
             }
 
             behaviour = null;
@@ -82,18 +82,7 @@ namespace Gamecore
         
         public static T Get<T>() where T : class, IBehaviour
         {
-            if (globals == null || locals == null) return null;
-
-            if (typeof(GlobalBehaviour).IsAssignableFrom(typeof(T)))
-            {
-                if (globals.TryGetValue(typeof(T), out var _value)) return _value as T;
-            }
-            else if (typeof(LocalBehaviour).IsAssignableFrom(typeof(T)))
-            {
-                if (locals.TryGetValue(typeof(T), out var _value)) return _value as T;
-            }
-
-            return null;
+            return TryGet<T>(out var _behaviour) ? _behaviour : null;
         }
 
         public static void Quit()

@@ -1,11 +1,11 @@
 using UnityEngine;
 
-namespace Gamecore
+namespace ACore
 {
     public class SceneStarted : LocalBehaviour
     {
         [SerializeField] private AudioClip sceneBGM;
-        public override void OnStart()
+        public void Start()
         {
             sceneBGM.PlayLoop();
         }

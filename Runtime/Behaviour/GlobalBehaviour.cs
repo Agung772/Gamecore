@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace Gamecore
+namespace ACore
 {
     public class GlobalBehaviour : IBehaviour
     {

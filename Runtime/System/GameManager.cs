@@ -15,10 +15,10 @@ namespace ACore
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void OnPlay()
         {
-            Debug.Log("BeforeSceneLoad");
+            Debug.Log($"{nameof(ACore)}: Play");
             if (SceneManager.GetActiveScene().buildIndex != 0)
             {
-                Debug.Log("Instantiate");
+                Debug.Log($"{nameof(ACore)}: Create Manager");
                 Instantiate(Resources.Load<GameManager>("GameManager"));
             }
         }
@@ -32,11 +32,11 @@ namespace ACore
         private IEnumerator Initialize()
         {
             DontDestroyOnLoad(gameObject);
-            Debug.Log("DontDestroyOnLoad");
             Game.Manager = this;
             Game.Initialize();
-            Debug.Log("Initialize");
+            Debug.Log($"{nameof(ACore)}: Initialize");
             yield return Game.InitializeCoroutine();
+            Debug.Log($"{nameof(ACore)}: Initialize Coroutine");
             
             if (SceneManager.GetActiveScene().buildIndex == 0)
             {

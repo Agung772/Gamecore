@@ -18,6 +18,7 @@ namespace ACore
             Debug.Log("BeforeSceneLoad");
             if (SceneManager.GetActiveScene().buildIndex != 0)
             {
+                Debug.Log("Instantiate");
                 Instantiate(Resources.Load<GameManager>("GameManager"));
             }
         }
@@ -31,6 +32,7 @@ namespace ACore
         private IEnumerator Initialize()
         {
             DontDestroyOnLoad(gameObject);
+            Debug.Log("DontDestroyOnLoad");
             Game.Manager = this;
             Game.Initialize();
             Debug.Log("Initialize");

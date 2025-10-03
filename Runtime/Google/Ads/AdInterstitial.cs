@@ -3,7 +3,7 @@
 using GoogleMobileAds.Api;
 using UnityEngine;
 
-namespace Gamecore.Google
+namespace ACore.Google
 {
     public class AdInterstitial : AdBase
     {

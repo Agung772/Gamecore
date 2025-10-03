@@ -3,9 +3,9 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Gamecore.Google
+namespace ACore.Google
 {
-    [CreateAssetMenu(menuName = "Gamecore/Ad Setting")]
+    [CreateAssetMenu(menuName = "ACore/Ad Setting")]
     public class GoogleSetting : ScriptableObject
     {
         [FoldoutGroup("Ad")] public bool noAds;

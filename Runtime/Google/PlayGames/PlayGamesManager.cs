@@ -8,7 +8,7 @@ using GooglePlayGames.BasicApi;
 using UnityEngine;
 
 
-namespace Gamecore.Google
+namespace ACore.Google
 {
     public class PlayGamesManager : GlobalBehaviour
     { 

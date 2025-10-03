@@ -3,7 +3,7 @@
 using GooglePlayGames;
 using UnityEngine;
 
-namespace Gamecore.Google
+namespace ACore.Google
 {
     public class PlayGamesLeaderboard : PlayGamesBase
     {

@@ -4,7 +4,7 @@ using System.Collections;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
-namespace Gamecore.Google
+namespace ACore.Google
 {
     public class AdBanner : AdBase
     {

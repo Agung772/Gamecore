@@ -1,6 +1,6 @@
 #if GOOGLE_MOBILE
 
-namespace Gamecore.Google
+namespace ACore.Google
 {
     public class PlayGamesBase
     {

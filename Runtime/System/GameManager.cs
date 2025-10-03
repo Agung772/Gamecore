@@ -15,6 +15,7 @@ namespace ACore
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void OnPlay()
         {
+            Debug.Log("BeforeSceneLoad");
             if (SceneManager.GetActiveScene().buildIndex != 0)
             {
                 Instantiate(Resources.Load<GameManager>("GameManager"));
@@ -32,6 +33,7 @@ namespace ACore
             DontDestroyOnLoad(gameObject);
             Game.Manager = this;
             Game.Initialize();
+            Debug.Log("Initialize");
             yield return Game.InitializeCoroutine();
             
             if (SceneManager.GetActiveScene().buildIndex == 0)
